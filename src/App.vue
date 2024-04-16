@@ -1,7 +1,8 @@
 <template>
-  <div class="app">
-        <Sidebar />
-        
+    <v-app>
+    <div class="app">
+    <Sidebar/>
+
         <div class="headerAndContent">
             <Header />
             <router-view v-slot="{Component}"> 
@@ -10,15 +11,22 @@
                 </transition>
             </router-view>
         </div>
-
-        
-  </div>
+    </div>
+</v-app>
 </template>
 
-<script setup>
-import Sidebar from './components/Sidebar.vue'
-import Header from './components/Header.vue'
+<script>
+import Sidebar from './components/Sidebar.vue';
+import Header from './components/Header.vue';
 
+
+export default {
+  name: 'App',
+  components: {
+    Sidebar, 
+    Header,
+} 
+}
 </script>
 
 <style lang="scss" >

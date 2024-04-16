@@ -15,6 +15,8 @@
 
         <div class="main-content">
             <div class="add-student" >
+                <!-- <span class="material-icons">add_circle</span>
+                <span class="text">Add Student</span> -->
                 <AddStudent/>
             </div>
             
@@ -25,17 +27,16 @@
         </div>
 
         
-        
 </main>
 
 </template>
 
 <script>
-import AddStudent from '../components/AddStudent.vue'
+import AddStudent from '../components/AddStudent.vue';
 
   export default {
     components: { AddStudent},
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -44,7 +45,7 @@ import AddStudent from '../components/AddStudent.vue'
     margin: 0.5rem;
     .studentProfile{
         flex: 1;
-
+        
         .material-icons{
             color: var(--dark);
             font-size: 2.5rem;
@@ -89,29 +90,12 @@ import AddStudent from '../components/AddStudent.vue'
     display: flex;
     flex-direction: column;
     .add-student{
-        margin: 0.7rem;
-        padding: 8px;
-        max-width: 9rem;
-        .text{
-            position: relative;
-            color: var(--dark);
-            font-size: 17px;
-            font-weight: 900;
-            bottom: 0.5rem;
-        }
-
-        &:hover{
-            color: #e2e2e2;
-            background-color: var(--dark);
-            border-radius: 50px;
-            cursor: pointer;
-            
-                .text{
-                color: #e2e2e2;
-                }
-            }
-        }
+        position: relative;
+        right: 2rem;
+        padding: 10px;
+        max-width: 15rem;
     }
+}
 
 .student-table{
     background-color: #c0c0c0;

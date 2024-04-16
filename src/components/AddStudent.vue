@@ -230,9 +230,7 @@
 
 
             </v-row>
-  
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
-          </v-card-text>
+            </v-card-text>
   
           <v-divider></v-divider>
   

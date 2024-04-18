@@ -6,23 +6,20 @@
                 <span class="text">Student Profile</span>
             </div>
 
-            <div class="searchBar">
-                <span class="material-icons">search</span>
-                <input type="text" class="search" placeholder="Student LRN">
-            </div>
         </div>  
         <hr>
 
         <div class="main-content">
-            <div class="add-student" >
-                <!-- <span class="material-icons">add_circle</span>
-                <span class="text">Add Student</span> -->
+            <!-- <div class="add-student" >
+                <span class="material-icons">add_circle</span>
+                <span class="text">Add Student</span>
                 <AddStudent/>
-            </div>
+            </div> -->
             
 
             <div class="student-table">
-                <h1>Student Table</h1>
+                <!-- <h1>Student Table</h1> -->
+                <StudentTable/>
             </div>
         </div>
 
@@ -32,11 +29,15 @@
 </template>
 
 <script>
-import AddStudent from '../components/AddStudent.vue';
+// import AddStudent from '../components/AddStudent.vue';
+import StudentTable from '../components/StudentTable.vue';
 
-  export default {
-    components: { AddStudent},
-  };
+export default {
+  components: {
+    // AddStudent,
+    StudentTable
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -58,48 +59,20 @@ import AddStudent from '../components/AddStudent.vue';
             bottom: 0.5rem;
         }
     }
-    .searchBar{
-        display: flex;
-        flex: 0.4;
-        align-items: center;
-        justify-content: center;
-        
-        .material-icons {
-            color: var(--dark);
-            position: relative;
-            left: 2.5rem;      
-            }
 
-
-        .search{
-            width: 75%;
-            height: 90%;
-    
-        }
-        input[type=text] {  
-            padding: 12px 20px 12px 40px;
-            background-color: #c5c5c5;
-            border: 1px solid #c5c5c5; ;
-            border-radius: 20px;
-            font-size: 16px
-        }
-    } 
 } 
 
 .main-content {
     display: flex;
     flex-direction: column;
-    .add-student{
-        position: relative;
-        right: 2rem;
-        padding: 10px;
-        max-width: 15rem;
+
+    .student-table{
+        border-radius: 10px;
+        background-color: #f0f0f0;
+        padding: 0.5rem;
+        height: 100vh;
     }
 }
 
-.student-table{
-    background-color: #c0c0c0;
-    padding: 2rem;
-    height: 100vh;
-}
+
 </style>

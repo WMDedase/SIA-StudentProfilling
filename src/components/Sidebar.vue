@@ -55,7 +55,6 @@
       min-height: 100vh;
       overflow: hidden;
       padding: 1rem;
-  
       background-color: var(--dark);
       color: var(--light);
   
@@ -126,7 +125,7 @@
               }
   
               &:hover, &.router-link-exact-active{
-                  background-color: #e2e2e2;
+                  background-color: #fff;
                   margin-left: 0.5rem;
                   border-top-left-radius: 20px;
                   border-bottom-left-radius: 20px;
@@ -199,8 +198,8 @@
           }
   
           .menu-toggle-wrap {
-              top:-3rem;
-              left: 1rem;
+              top:-4rem;
+              left: 0.5rem;
               .menu-toggle{
                   transform: rotate(-180deg);
               }

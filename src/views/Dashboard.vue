@@ -85,7 +85,7 @@ main {
     margin-right: 1rem;
     .top-left{
         padding: 2rem;
-        background-color: #d8d8d8;
+        background-color: #f0f0f0;
         margin-bottom: 2rem;
         color: var(--dark);
         border-radius:5px;
@@ -172,7 +172,7 @@ main {
     }
     .bottom-left{
         padding: 1.5rem;
-        background-color: #d8d8d8;
+        background-color: #f0f0f0;
         color: var(--dark);
             
         h3 {

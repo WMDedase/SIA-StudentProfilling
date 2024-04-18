@@ -6,6 +6,10 @@ const router = createRouter ({
         {
             path: '/login',
             component: () => import('../views/AdminLogin.vue')
+
+
+
+            
         },
         {
             path: '/dashboard',

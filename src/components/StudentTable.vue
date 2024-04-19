@@ -24,7 +24,7 @@
         single-line
       ></v-text-field>
       
-        <v-dialog v-model="dialog" max-width="800px">
+        <v-dialog v-model="dialog" max-width="1000px">
           
           <template v-slot:activator="{ props }">
             <v-btn class="mb-2 rounded-l	" color="primary" dark v-bind="props" prepend-icon="mdi-plus">Add Student</v-btn>
@@ -41,7 +41,7 @@
                   sm="6"
                 >
                   <v-text-field
-                    v-model="editedItem.LRN"
+                    v-model="editedItem.student_lrn"
                     label="LRN*"
                     required
                   ></v-text-field>
@@ -53,19 +53,25 @@
                   sm="6"
                 >
                   <v-text-field
-                    v-model="editedItem.emailAddress"
+                    v-model="editedItem.email"
                     label="Email Address*"
                     required
                   ></v-text-field>
                 </v-col>
                 
                 <v-col
+                cols="12"
+                md="4"
+                sm="6"
+                ></v-col>
+
+                <v-col
                   cols="12"
                   md="3"
                   sm="6"
                 >
                   <v-text-field
-                    v-model="editedItem.firstName"
+                    v-model="editedItem.first_name"
                     label="First Name*"
                     required
                   ></v-text-field>
@@ -77,7 +83,7 @@
                   sm="4"
                 >
                   <v-text-field
-                    v-model="editedItem.middleName"
+                    v-model="editedItem.middle_name"
                     hint="example of helper text only on focus"
                     label="Middle Name"
                   ></v-text-field>
@@ -89,7 +95,7 @@
                   sm="4"
                 >
                   <v-text-field
-                    v-model="editedItem.lastName"
+                    v-model="editedItem.last_name"
                     label="Last Name*"
                     persistent-hint
                     required
@@ -102,7 +108,7 @@
                   sm="4"
                 >
                   <v-text-field
-                    v-model="editedItem.extensionName"
+                    v-model="editedItem.extension"
                     label="Extension Name*"
                     required
                   ></v-text-field>
@@ -114,7 +120,7 @@
                   sm="6"
                 >
                   <v-select
-                    v-model="editedItem.sex"
+                    v-model="editedItem.sex_at_birth"
                     :items="['Male', 'Female', 'Other']"
                     label="Sex*"
                     required
@@ -127,7 +133,7 @@
                   sm="6"
                 >
                   <v-text-field
-                    v-model="editedItem.birthdate"
+                    v-model="editedItem.birth_date"
                     label="Birthdate*"
                     required
                   ></v-text-field>
@@ -139,7 +145,7 @@
                   sm="6"
                 >
                   <v-text-field
-                    v-model="editedItem.birthplace"
+                    v-model="editedItem.birth_place"
                     label="Birthplace*"
                     required
                   ></v-text-field>
@@ -151,7 +157,7 @@
                   sm="6"
                 >
                   <v-select
-                    v-model="editedItem.civilStatus"
+                    v-model="editedItem.civil_status"
                     :items="['Single','Married','Divorced']"
                     label="Civil Status*"
                     required
@@ -172,24 +178,12 @@
                 
                 <v-col
                   cols="12"
-                  md="3"
+                  md="2"
                   sm="6"
                 >
                   <v-text-field
                     v-model="editedItem.religion"
                     label="Religion*"
-                    required
-                  ></v-text-field>
-                </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="3"
-                  sm="6"
-                >
-                  <v-text-field
-                    v-model="editedItem.addressNo"
-                    label="Address No.*"
                     required
                   ></v-text-field>
                 </v-col>
@@ -212,8 +206,32 @@
                   sm="6"
                 >
                   <v-text-field
+                    v-model="editedItem.barangay"
+                    label="Barangay*"
+                    required
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="3"
+                  sm="6"
+                >
+                  <v-text-field
                     v-model="editedItem.city"
                     label="City*"
+                    required
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="3"
+                  sm="6"
+                >
+                  <v-text-field
+                    v-model="editedItem.province"
+                    label="Provice*"
                     required
                   ></v-text-field>
                 </v-col>
@@ -236,20 +254,8 @@
                   sm="6"
                 >
                   <v-text-field
-                    v-model="editedItem.zipCode"
+                    v-model="editedItem.zip_code"
                     label="Zip Code*"
-                    required
-                  ></v-text-field>
-                </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="3"
-                  sm="6"
-                >
-                  <v-text-field
-                    v-model="editedItem.country"
-                    label="Country*"
                     required
                   ></v-text-field>
                 </v-col>
@@ -279,10 +285,10 @@
     </template>
     <template v-slot:item="{ item }">
       <tr>
-        <td>{{ item.firstName }} {{ item.middleName }} {{ item.lastName }} {{ item.extensionName }}</td>
-        <td>{{ item.studentId }}</td>
-        <td>{{ item.LRN }}</td>
-        <td>{{ item.gradeLevel }}</td>
+        <td>{{ item.first_name }} {{ item.middle_name }} {{ item.last_name }} {{ item.extension }}</td>
+        <td>{{ item.student_id }}</td>
+        <td>{{ item.student_lrn }}</td>
+        <td>{{ item.grade_level }}</td>
         <td>{{ item.strand }}</td>
         <td>
           <v-icon class="me-2" size="small" style="color: #2F3F64" @click="editItem(item)">mdi-pencil</v-icon>
@@ -305,60 +311,60 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      { title: 'Name', align: 'start', key:'fullName'},
-      { title: 'Student ID', key: 'studentId' },
-      { title: 'LRN', key: 'LRN' },
-      { title: 'Grade Level', key: 'gradeLevel' },
+      { title: 'Name', align: 'start', key:'full_name'},
+      { title: 'Student ID', key: 'student_id' },
+      { title: 'LRN', key: 'student_lrn' },
+      { title: 'Grade Level', key: 'grade_level' },
       { title: 'Strand', key: 'strand' },
       { title: 'Actions', sortable: false },
     ],
     students: [],
     editedIndex: -1,
     editedItem: {
-      studentId: '',
-      LRN: '',
-      gradeLevel: '',
+      student_id: '',
+      student_lrn: '',
+      grade_level: '',
       strand: '',
-      emailAddress: '',
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      extensionName: '',
-      sex: '',
-      birthdate: '',
-      birthplace: '',
-      civilStatus: '',
+      email: '',
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      extension: '',
+      sex_at_birth: '',
+      birth_date: '',
+      birth_place: '',
+      civil_status: '',
       citizenship: '',
       religion: '',
-      addressNo: '',
       street: '',
+      barangay: '',
       city: '',
+      province: '',
       region: '',
-      zipCode: '',
-      country: '',
+      zip_code: '',
     },
     defaultItem: {
-      studentId: '',
-      LRN: '',
-      gradeLevel: '',
+      student_id: '',
+      student_lrn: '',
+      grade_level: '',
       strand: '',
-      emailAddress: '',
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      extensionName: '',
-      sex: '',
-      birthdate: '',
-      birthplace: '',
-      civilStatus: '',
+      email: '',
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      extension: '',
+      sex_at_birth: '',
+      birth_date: '',
+      birth_place: '',
+      civil_status: '',
       citizenship: '',
       religion: '',
-      addressNo: '',
       street: '',
+      barangay: '',
       city: '',
+      province: '',
       region: '',
-      zipCode: '',
-      country: '',
+      zip_code: '',
       
     },
     
@@ -394,491 +400,495 @@ export default {
   methods: {
     initialize() {
       this.students = [
-      { 
-      fullName: 'John Doe',
-      studentId: '2021001', 
-      LRN: '1234567890', 
-      gradeLevel: '10', 
+        { 
+      student_id: '2021001', 
+      student_lrn: '1234567890', 
+      grade_level: '10', 
       strand: 'STEM', 
-      emailAddress: 'john.doe@example.com',
-      firstName: 'John',
-      middleName: '',
-      lastName: 'Doe',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '1999-05-15',
-      birthplace: 'New York',
-      civilStatus: 'Single',
+      email: 'john.doe@example.com',
+      first_name: 'John',
+      middle_name: '',
+      last_name: 'Doe',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '1999-05-15',
+      birth_place: 'New York',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '123',
       street: 'Main Street',
-      city: 'New York City',
-      region: 'New York',
-      zipCode: '10001',
-      country: 'USA'
+      barangay: 'San Juan',
+      city: 'Makati',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1234'
     },
     { 
-      fullName: 'Jane Elizabeth Smith',
-      studentId: '2021002', 
-      LRN: '0987654321', 
-      gradeLevel: '11', 
+      student_id: '2021002', 
+      student_lrn: '0987654321', 
+      grade_level: '11', 
       strand: 'ABM', 
-      emailAddress: 'jane.smith@example.com',
-      firstName: 'Jane',
-      middleName: 'Elizabeth',
-      lastName: 'Smith',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '2000-03-25',
-      birthplace: 'Los Angeles',
-      civilStatus: 'Single',
+      email: 'jane.smith@example.com',
+      first_name: 'Jane',
+      middle_name: 'Elizabeth',
+      last_name: 'Smith',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2000-03-25',
+      birth_place: 'Los Angeles',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '456',
       street: 'Oak Avenue',
+      barangay: 'San Antonio',
       city: 'Los Angeles',
+      province: 'California',
       region: 'California',
-      zipCode: '90001',
-      country: 'USA'
+      zip_code: '90001'
     },
-    {
-      fullName: 'John William Johnson',
-      studentId: '2021003',
-      LRN: '1234567890',
-      gradeLevel: '10',
+    { 
+      student_id: '2021003',
+      student_lrn: '1234567890',
+      grade_level: '10',
       strand: 'STEM',
-      emailAddress: 'john.johnson@example.com',
-      firstName: 'John',
-      middleName: 'William',
-      lastName: 'Johnson',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '2001-02-15',
-      birthplace: 'Chicago',
-      civilStatus: 'Single',
+      email: 'john.johnson@example.com',
+      first_name: 'John',
+      middle_name: 'William',
+      last_name: 'Johnson',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '2001-02-15',
+      birth_place: 'Chicago',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '789',
       street: 'Maple Street',
+      barangay: 'San Andres',
       city: 'Chicago',
+      province: 'Illinois',
       region: 'Illinois',
-      zipCode: '60601',
-      country: 'USA'
+      zip_code: '60601'
     },
-    {
-      fullName: 'Mary Ann Brown',
-      studentId: '2021004',
-      LRN: '0987654321',
-      gradeLevel: '11',
+    // Add more students here...
+    { 
+      student_id: '2021004',
+      student_lrn: '0987654321',
+      grade_level: '11',
       strand: 'ABM',
-      emailAddress: 'mary.brown@example.com',
-      firstName: 'Mary',
-      middleName: 'Ann',
-      lastName: 'Brown',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '2000-07-10',
-      birthplace: 'Houston',
-      civilStatus: 'Single',
+      email: 'mary.brown@example.com',
+      first_name: 'Mary',
+      middle_name: 'Ann',
+      last_name: 'Brown',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2000-07-10',
+      birth_place: 'Houston',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '456',
       street: 'Pine Street',
-      city: 'Houston',
-      region: 'Texas',
-      zipCode: '77001',
-      country: 'USA'
+      barangay: 'San Roque',
+      city: 'Quezon City',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1235'
     },
-    {
-      fullName: 'Michael Robert Miller',
-      studentId: '2021005',
-      LRN: '1234567890',
-      gradeLevel: '12',
+    { 
+      student_id: '2021005',
+      student_lrn: '1234567890',
+      grade_level: '12',
       strand: 'HUMSS',
-      emailAddress: 'michael.miller@example.com',
-      firstName: 'Michael',
-      middleName: 'Robert',
-      lastName: 'Miller',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '1999-11-20',
-      birthplace: 'Philadelphia',
-      civilStatus: 'Single',
+      email: 'michael.miller@example.com',
+      first_name: 'Michael',
+      middle_name: 'Robert',
+      last_name: 'Miller',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '1999-11-20',
+      birth_place: 'Philadelphia',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '789',
       street: 'Cedar Street',
-      city: 'Philadelphia',
-      region: 'Pennsylvania',
-      zipCode: '19101',
-      country: 'USA'
+      barangay: 'Sta. Mesa',
+      city: 'Manila',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1236'
     },
-    {
-      fullName: 'Emily Grace Taylor',
-      studentId: '2021006',
-      LRN: '0987654321',
-      gradeLevel: '10',
+    { 
+      student_id: '2021006',
+      student_lrn: '0987654321',
+      grade_level: '10',
       strand: 'STEM',
-      emailAddress: 'emily.taylor@example.com',
-      firstName: 'Emily',
-      middleName: 'Grace',
-      lastName: 'Taylor',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '2001-05-30',
-      birthplace: 'Phoenix',
-      civilStatus: 'Single',
+      email: 'emily.taylor@example.com',
+      first_name: 'Emily',
+      middle_name: 'Grace',
+      last_name: 'Taylor',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2001-05-30',
+      birth_place: 'Phoenix',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '456',
       street: 'Elm Street',
-      city: 'Phoenix',
-      region: 'Arizona',
-      zipCode: '85001',
-      country: 'USA'
+      barangay: 'Sta. Ana',
+      city: 'Taguig',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1237'
     },
-    {
-      fullName: 'Daniel Joseph Anderson',
-      studentId: '2021007',
-      LRN: '1234567890',
-      gradeLevel: '11',
+    { 
+      student_id: '2021007',
+      student_lrn: '1234567890',
+      grade_level: '11',
       strand: 'ABM',
-      emailAddress: 'daniel.anderson@example.com',
-      firstName: 'Daniel',
-      middleName: 'Joseph',
-      lastName: 'Anderson',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '2000-09-12',
-      birthplace: 'San Antonio',
-      civilStatus: 'Single',
+      email: 'william.white@example.com',
+      first_name: 'William',
+      middle_name: 'David',
+      last_name: 'White',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '2000-09-05',
+      birth_place: 'San Diego',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '789',
-      street: 'Oak Street',
-      city: 'San Antonio',
-      region: 'Texas',
-      zipCode: '78201',
-      country: 'USA'
-    },
-    {
-      fullName: 'Olivia Sophia Martinez',
-      studentId: '2021008',
-      LRN: '0987654321',
-      gradeLevel: '12',
-      strand: 'HUMSS',
-      emailAddress: 'olivia.martinez@example.com',
-      firstName: 'Olivia',
-      middleName: 'Sophia',
-      lastName: 'Martinez',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '1999-12-05',
-      birthplace: 'San Diego',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '456',
-      street: 'Main Street',
-      city: 'San Diego',
-      region: 'California',
-      zipCode: '92101',
-      country: 'USA'
-    },
-    {
-      fullName: 'Alexander Samuel Hernandez',
-      studentId: '2021009',
-      LRN: '1234567890',
-      gradeLevel: '10',
-      strand: 'STEM',
-      emailAddress: 'alexander.hernandez@example.com',
-      firstName: 'Alexander',
-      middleName: 'Samuel',
-      lastName: 'Hernandez',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '2001-04-18',
-      birthplace: 'San Jose',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '789',
       street: 'Birch Street',
-      city: 'San Jose',
-      region: 'California',
-      zipCode: '95101',
-      country: 'USA'
+      barangay: 'Poblacion',
+      city: 'Mandaluyong',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1238'
     },
-    {
-      fullName: 'Sophia Isabella Thompson',
-      studentId: '2021010',
-      LRN: '0987654321',
-      gradeLevel: '11',
-      strand: 'ABM',
-      emailAddress: 'sophia.thompson@example.com',
-      firstName: 'Sophia',
-      middleName: 'Isabella',
-      lastName: 'Thompson',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '2000-08-22',
-      birthplace: 'Dallas',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '456',
-      street: 'Cypress Street',
-      city: 'Dallas',
-      region: 'Texas',
-      zipCode: '75201',
-      country: 'USA'
-    },
-    {
-      fullName: 'William Benjamin White',
-      studentId: '2021011',
-      LRN: '1234567890',
-      gradeLevel: '12',
+    { 
+      student_id: '2021008',
+      student_lrn: '0987654321',
+      grade_level: '12',
       strand: 'HUMSS',
-      emailAddress: 'william.white@example.com',
-      firstName: 'William',
-      middleName: 'Benjamin',
-      lastName: 'White',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '1999-10-14',
-      birthplace: 'San Francisco',
-      civilStatus: 'Single',
+      email: 'sophia.thompson@example.com',
+      first_name: 'Sophia',
+      middle_name: 'Nicole',
+      last_name: 'Thompson',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '1999-12-10',
+      birth_place: 'San Francisco',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '789',
-      street: 'Pine Street',
-      city: 'San Francisco',
-      region: 'California',
-      zipCode: '94101',
-      country: 'USA'
+      street: 'Willow Street',
+      barangay: 'Ayala Alabang',
+      city: 'Muntinlupa',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1239'
     },
-    {
-      fullName: 'Isabella Mia Jackson',
-      studentId: '2021012',
-      LRN: '0987654321',
-      gradeLevel: '10',
+    { 
+      student_id: '2021009',
+      student_lrn: '1234567890',
+      grade_level: '10',
       strand: 'STEM',
-      emailAddress: 'isabella.jackson@example.com',
-      firstName: 'Isabella',
-      middleName: 'Mia',
-      lastName: 'Jackson',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '2001-06-28',
-      birthplace: 'Austin',
-      civilStatus: 'Single',
+      email: 'ethan.thomas@example.com',
+      first_name: 'Ethan',
+      middle_name: 'Joseph',
+      last_name: 'Thomas',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '2001-06-20',
+      birth_place: 'Dallas',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '456',
-      street: 'Maple Street',
-      city: 'Austin',
-      region: 'Texas',
-      zipCode: '73301',
-      country: 'USA'
+      street: 'Chestnut Street',
+      barangay: 'Poblacion',
+      city: 'Makati',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1240'
     },
-    {
-      fullName: 'James David Harris',
-      studentId: '2021013',
-      LRN: '1234567890',
-      gradeLevel: '11',
+    { 
+      student_id: '2021010',
+      student_lrn: '0987654321',
+      grade_level: '11',
       strand: 'ABM',
-      emailAddress: 'james.harris@example.com',
-      firstName: 'James',
-      middleName: 'David',
-      lastName: 'Harris',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '2000-01-08',
-      birthplace: 'San Francisco',
-      civilStatus: 'Single',
+      email: 'olivia.anderson@example.com',
+      first_name: 'Olivia',
+      middle_name: 'Rose',
+      last_name: 'Anderson',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2000-08-15',
+      birth_place: 'Seattle',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '789',
-      street: 'Cedar Street',
-      city: 'San Francisco',
-      region: 'California',
-      zipCode: '94101',
-      country: 'USA'
+      street: 'Juniper Street',
+      barangay: 'San Lorenzo',
+      city: 'Makati',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1241'
     },
-    {
-      fullName: 'Emma Charlotte King',
-      studentId: '2021014',
-      LRN: '0987654321',
-      gradeLevel: '12',
-      strand: 'HUMSS',
-      emailAddress: 'emma.king@example.com',
-      firstName: 'Emma',
-      middleName: 'Charlotte',
-      lastName: 'King',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '1999-07-18',
-      birthplace: 'Seattle',
-      civilStatus: 'Single',
+    { 
+      student_id: '2021012', 
+      student_lrn: '1234567890', 
+      grade_level: '11', 
+      strand: 'STEM', 
+      email: 'emma.johnson@example.com',
+      first_name: 'Emma',
+      middle_name: 'Grace',
+      last_name: 'Johnson',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2000-04-18',
+      birth_place: 'Chicago',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '456',
-      street: 'Birch Street',
-      city: 'Seattle',
-      region: 'Washington',
-      zipCode: '98101',
-      country: 'USA'
-    },
-    {
-      fullName: 'Benjamin Oliver Lee',
-      studentId: '2021015',
-      LRN: '1234567890',
-      gradeLevel: '10',
-      strand: 'STEM',
-      emailAddress: 'benjamin.lee@example.com',
-      firstName: 'Benjamin',
-      middleName: 'Oliver',
-      lastName: 'Lee',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '2001-03-15',
-      birthplace: 'Denver',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '789',
       street: 'Elm Street',
-      city: 'Denver',
-      region: 'Colorado',
-      zipCode: '80201',
-      country: 'USA'
-    },
-    {
-      fullName: 'Evelyn Harper Garcia',
-      studentId: '2021016',
-      LRN: '0987654321',
-      gradeLevel: '11',
-      strand: 'ABM',
-      emailAddress: 'evelyn.garcia@example.com',
-      firstName: 'Evelyn',
-      middleName: 'Harper',
-      lastName: 'Garcia',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '2000-09-20',
-      birthplace: 'Boston',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '456',
-      street: 'Cypress Street',
-      city: 'Boston',
-      region: 'Massachusetts',
-      zipCode: '02101',
-      country: 'USA'
-    },
-    {
-      fullName: 'Michaela Abigail Clark',
-      studentId: '2021017',
-      LRN: '1234567890',
-      gradeLevel: '12',
-      strand: 'HUMSS',
-      emailAddress: 'michaela.clark@example.com',
-      firstName: 'Michaela',
-      middleName: 'Abigail',
-      lastName: 'Clark',
-      extensionName: '',
-      sex: 'Female',
-      birthdate: '1999-12-30',
-      birthplace: 'Detroit',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '789',
-      street: 'Maple Street',
-      city: 'Detroit',
-      region: 'Michigan',
-      zipCode: '48201',
-      country: 'USA'
-    },
-    {
-      fullName: 'Ethan Gabriel Rodriguez',
-      studentId: '2021018',
-      LRN: '0987654321',
-      gradeLevel: '10',
-      strand: 'STEM',
-      emailAddress: 'ethan.rodriguez@example.com',
-      firstName: 'Ethan',
-      middleName: 'Gabriel',
-      lastName: 'Rodriguez',
-      extensionName: '',
-      sex: 'Male',
-      birthdate: '2001-07-25',
-      birthplace: 'Memphis',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '456',
-      street: 'Cedar Street',
-      city: 'Memphis',
-      region: 'Tennessee',
-      zipCode: '38101',
-      country: 'USA'
-    },
-    {
-      fullName: 'David Michael Johnson Jr.',
-      studentId: '2021019',
-      LRN: '1234567890',
-      gradeLevel: '11',
-      strand: 'ABM',
-      emailAddress: 'david.johnson@example.com',
-      firstName: 'David',
-      middleName: 'Michael',
-      lastName: 'Johnson',
-      extensionName: 'Jr.',
-      sex: 'Male',
-      birthdate: '2000-11-12',
-      birthplace: 'Chicago',
-      civilStatus: 'Single',
-      citizenship: 'American',
-      religion: 'Christianity',
-      addressNo: '789',
-      street: 'Oak Street',
+      barangay: 'San Andres',
       city: 'Chicago',
+      province: 'Illinois',
       region: 'Illinois',
-      zipCode: '60601',
-      country: 'USA'
+      zip_code: '60601'
     },
-    {
-      fullName: 'Sophie Emily Brown III',
-      studentId: '2021020',
-      LRN: '0987654321',
-      gradeLevel: '12',
-      strand: 'HUMSS',
-      emailAddress: 'sophie.brown@example.com',
-      firstName: 'Sophie',
-      middleName: 'Emily',
-      lastName: 'Brown',
-      extensionName: 'III',
-      sex: 'Female',
-      birthdate: '1999-04-08',
-      birthplace: 'Houston',
-      civilStatus: 'Single',
+    { 
+      student_id: '2021013',
+      student_lrn: '0987654321',
+      grade_level: '10',
+      strand: 'ABM',
+      email: 'daniel.wilson@example.com',
+      first_name: 'Daniel',
+      middle_name: 'James',
+      last_name: 'Wilson',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '2001-01-12',
+      birth_place: 'Houston',
+      civil_status: 'Single',
       citizenship: 'American',
       religion: 'Christianity',
-      addressNo: '456',
+      street: 'Pine Street',
+      barangay: 'San Roque',
+      city: 'Quezon City',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1235'
+    },
+    { 
+      student_id: '2021014',
+      student_lrn: '1234567890',
+      grade_level: '12',
+      strand: 'HUMSS',
+      email: 'oliver.anderson@example.com',
+      first_name: 'Oliver',
+      middle_name: 'Michael',
+      last_name: 'Anderson',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '1999-07-30',
+      birth_place: 'Philadelphia',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Cedar Street',
+      barangay: 'Sta. Mesa',
+      city: 'Manila',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1236'
+    },
+    { 
+      student_id: '2021015',
+      student_lrn: '0987654321',
+      grade_level: '11',
+      strand: 'ABM',
+      email: 'sophia.clark@example.com',
+      first_name: 'Sophia',
+      middle_name: 'Rose',
+      last_name: 'Clark',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2000-02-05',
+      birth_place: 'Phoenix',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Oak Street',
+      barangay: 'Sta. Ana',
+      city: 'Taguig',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1237'
+    },
+    { 
+      student_id: '2021016',
+      student_lrn: '1234567890',
+      grade_level: '10',
+      strand: 'STEM',
+      email: 'mia.white@example.com',
+      first_name: 'Mia',
+      middle_name: 'Elizabeth',
+      last_name: 'White',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2001-08-20',
+      birth_place: 'San Diego',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Birch Street',
+      barangay: 'Poblacion',
+      city: 'Mandaluyong',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1238'
+    },
+    { 
+      student_id: '2021017',
+      student_lrn: '0987654321',
+      grade_level: '12',
+      strand: 'HUMSS',
+      email: 'ethan.hall@example.com',
+      first_name: 'Ethan',
+      middle_name: 'Andrew',
+      last_name: 'Hall',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '1999-06-15',
+      birth_place: 'San Francisco',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Willow Street',
+      barangay: 'Ayala Alabang',
+      city: 'Muntinlupa',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1239'
+    },
+    { 
+      student_id: '2021018',
+      student_lrn: '1234567890',
+      grade_level: '10',
+      strand: 'STEM',
+      email: 'amelia.martin@example.com',
+      first_name: 'Amelia',
+      middle_name: 'Charlotte',
+      last_name: 'Martin',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2001-10-10',
+      birth_place: 'Dallas',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Chestnut Street',
+      barangay: 'Poblacion',
+      city: 'Makati',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1240'
+    },
+    { 
+      student_id: '2021019',
+      student_lrn: '0987654321',
+      grade_level: '11',
+      strand: 'ABM',
+      email: 'william.young@example.com',
+      first_name: 'William',
+      middle_name: 'Matthew',
+      last_name: 'Young',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '2000-12-05',
+      birth_place: 'Seattle',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Juniper Street',
+      barangay: 'San Lorenzo',
+      city: 'Makati',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1241'
+    },
+    { 
+      student_id: '2021020',
+      student_lrn: '1234567890',
+      grade_level: '12',
+      strand: 'HUMSS',
+      email: 'emily.harris@example.com',
+      first_name: 'Emily',
+      middle_name: 'Olivia',
+      last_name: 'Harris',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '1999-11-25',
+      birth_place: 'Boston',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Magnolia Street',
+      barangay: 'San Isidro',
+      city: 'Quezon City',
+      province: 'Metro Manila',
+      region: 'National Capital Region (NCR)',
+      zip_code: '1242'
+    },
+    { 
+      student_id: '2021021',
+      student_lrn: '0987654321',
+      grade_level: '10',
+      strand: 'STEM',
+      email: 'alexander.king@example.com',
+      first_name: 'Alexander',
+      middle_name: 'David',
+      last_name: 'King',
+      extension: '',
+      sex_at_birth: 'Male',
+      birth_date: '2001-03-18',
+      birth_place: 'San Jose',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
+      street: 'Sycamore Street',
+      barangay: 'San Antonio',
+      city: 'Los Angeles',
+      province: 'California',
+      region: 'California',
+      zip_code: '90001'
+    },
+    { 
+      student_id: '2021022',
+      student_lrn: '1234567890',
+      grade_level: '11',
+      strand: 'ABM',
+      email: 'mia.lewis@example.com',
+      first_name: 'Mia',
+      middle_name: 'Sophia',
+      last_name: 'Lewis',
+      extension: '',
+      sex_at_birth: 'Female',
+      birth_date: '2000-09-12',
+      birth_place: 'San Antonio',
+      civil_status: 'Single',
+      citizenship: 'American',
+      religion: 'Christianity',
       street: 'Maple Street',
-      city: 'Houston',
-      region: 'Texas',
-      zipCode: '77001',
-      country: 'USA'
+      barangay: 'San Andres',
+      city: 'Chicago',
+      province: 'Illinois',
+      region: 'Illinois',
+      zip_code: '60601'
     },
 
       ];
       this.students.forEach(student => {
-  student.fullName = `${student.firstName} ${student.middleName} ${student.lastName} ${student.extensionName}`.trim();
-    if (student.gradeLevel < 11 || student.gradeLevel > 12) {
+  student.full_name = `${student.first_name} ${student.middle_name} ${student.last_name} ${student.extension}`.trim();
+    if (student.grade_level < 11 || student.grade_level > 12) {
         // Remove the strand property
         student.strand = "N/A";
     }
@@ -926,6 +936,7 @@ export default {
       }
       this.close();
     },
+    
   },
 };
 </script>

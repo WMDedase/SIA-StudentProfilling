@@ -44,15 +44,19 @@ watchEffect(() => {
         <img class="sna-logo" src="/src/assets/SNA Logo with BG.png" alt="">
 
         <h2 class="sp-text"> Student Profiling</h2>
-      <br>
+
+        <!-- <div class="menu-toggle-wrap">
+          <button class="menu-toggle" @click="toggleMenu"> 
+              <span class="material-icons">
+                  keyboard_double_arrow_right
+                  </span> 
+          </button>
+        </div> -->
+    <br>
+      
   <hr>
-          <div class="menu-toggle-wrap">
-              <button class="menu-toggle" @click="ToggleMenu"> 
-                  <span class="material-icons">
-                      keyboard_double_arrow_right
-                      </span> 
-              </button>
-      </div>
+<br>
+<br>
       
       <div class="menu">
           <router-link class="button" to="/dashboard">
@@ -65,23 +69,26 @@ watchEffect(() => {
             <button class="dropbtn">
             <span class="material-icons">article</span>
             <span class="text">Status Information</span>
+            
             </button>
             <transition name="fade">
             <div class="dropdown-content" v-if="isDropdownOpen" @click.stop>
                 <!-- Five tabs in the dropdown -->
-                <router-link to="/clinic"><span class="material-icons">medical_services</span><span class="text">Clinic</span></router-link>
-                <router-link to="/finance"><span class="material-icons">attach_money</span><span class="text">Finance</span></router-link>
-                <router-link to="/guidance"><span class="material-icons">accessibility</span><span class="text">Guidnace</span></router-link>
-                <router-link to="/registrar"><span class="material-icons">import_contacts</span><span class="text">Registrar</span></router-link>
+                <!-- <router-link to="/inventory"><span class="material-icons">inventory</span><span class="text">Inventory</span></router-link> -->
+                <router-link to="/guidance"><span class="material-icons">accessibility</span><span class="text">Guidance</span></router-link>
                 <router-link to="/library"><span class="material-icons">book</span><span class="text">Library</span></router-link>
             </div>
             </transition>
         </div>
 
+        <router-link class="button" to="/profile">
+          <span class="material-icons">account_circle</span>
+          <span class="text">Profile</span>
+      </router-link>
+
       </div>
 
       <hr class="hr">
-
 
       <div class="menu-logout">
           <router-link class="button" to="#" @click="logoutAlert">
@@ -96,6 +103,7 @@ watchEffect(() => {
 <script>
 
 export default {
+  
     name: "Sidebar",
   data() {
     return {
@@ -151,7 +159,7 @@ export default {
         height: 2.5rem;
         width: 2.5rem;
         transition: 0.2s ease-out;
-        border-radius: 1.1rem;
+        border-radius: 50%;
       }
 
       .sp-text{
@@ -173,6 +181,7 @@ export default {
                   font-size: 2rem;
                   color: var(--light);
                   transition: 0.2s ease-out;
+                  
               }
   
               &:hover {
@@ -224,10 +233,12 @@ export default {
           }
 
           .dropdown {
-            padding: 0.8rem 1rem;
+
+            padding: 0.8rem 0.9rem;
             transition: 0.2s ease-out;
 
             .dropbtn{
+              margin-bottom: -1.2rem;
                 .material-icons {
                         font-size: 2rem;
                         color: var(--light);
@@ -238,6 +249,12 @@ export default {
                 .text{
                     opacity: 0;
                     transition: 0.2s ease-out;
+
+                }
+
+                &:hover{
+                  margin-left: 0.3rem;
+                  transition: 0.2s ease-out;
 
                 }
             }   
@@ -295,7 +312,7 @@ export default {
               align-items: center;
               text-decoration: none;
   
-              padding: 0.8rem 1rem;
+              padding: 0.81rem 1rem;
               margin-bottom: 0.5rem;
               transition: 0.2s ease-out;
               .material-icons {
@@ -310,7 +327,7 @@ export default {
               }
   
               &:hover{
-                  .material-icons, .text {
+                  .material-icons, .text  {
                       color: var(--primary);
                   }
               }
@@ -368,7 +385,7 @@ export default {
             text-decoration: none;
             padding: 0.8rem 1rem;
             transition: 0.2s ease-out;
-
+            margin-bottom: 1.2rem;
             .dropbtn{
                 
                 .material-icons {

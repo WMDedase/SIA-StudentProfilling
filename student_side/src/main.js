@@ -5,7 +5,6 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import 'vuetify/dist/vuetify.min.css';
-import axios from 'axios'
 
 
 loadFonts()

@@ -43,7 +43,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    
     public function studentProfile()
     {
         return $this->hasOne(StudentProfiling::class, 'user_id');

@@ -41,11 +41,11 @@ import Swal from 'sweetalert2'
                           <v-text-field
                             v-model="email" 
                             label="Email Address/ Student ID"
+                            placeholder="e.g. 202407360@sna.edu.ph"
                             name="Email"
                             prepend-icon="mdi-email"
                             type="text"
                             color="var(--dark)"
-                            width="300"
                             />
                           <v-text-field
                             v-model="password"
@@ -56,11 +56,12 @@ import Swal from 'sweetalert2'
                             name="Password"
                             prepend-icon="mdi-lock"
                             color="var(--dark)"
+                         
                             />
                         </v-form> 
                       </v-card-text>
-                      <div class="text-center pb-2 mx-md-auto">
-                        <v-btn rectangle color="var(--dark)" @click="login" style="color:white; text-decoration: none; width: auto; font-size: 15px; ">Log in</v-btn>
+                      <div class="text-center pb-5" style="margin-top: -15px" >
+                        <v-btn rectangle color="var(--dark)" @click="login" style="color:white; text-decoration: none; font-size: 15px; ">Log in</v-btn>
                       </div>
                       <div class="text-center pb-2">
                         <a href="" style="display: inline-block;">

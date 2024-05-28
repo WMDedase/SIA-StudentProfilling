@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 // MODELS IMPORT
 use App\Models\Registrar\Enrollment;
+use App\Models\StudentProfiling;
+
 
 class EnrollmentInfo extends Controller
 {
@@ -24,20 +26,22 @@ class EnrollmentInfo extends Controller
                 $query->select('id', \DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"), 'department');
             }
         ])->get();
-        $data = [
-            'status'=>200,
-            'enrollments'=>$enrollments
-        ];
-        return response()->json($data, 200);
+        
+        if($enrollments->isNotEmpty()) {
+            $data = [
+                'status'=>200,
+                'enrollment'=>$enrollments
+            ];
+            return response()->json($data, 200);
+        } else {
+            $data =[
+                'status'=>404,
+                'enrollment'=>'no Data has been Found'
+            ];
+            return response()->json( $data, 404);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,6 +57,8 @@ class EnrollmentInfo extends Controller
         $enroll->adviser_id = Auth::id();
         $enroll->adviser_id = $request->adviser_id;
         $enroll->save();
+
+
 
         $data = [
             'status'=>200,

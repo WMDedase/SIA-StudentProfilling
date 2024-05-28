@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\StudentProfiling;
+use App\Models\Registrar\Faculty;
 
 class StudentFamilyInfo extends Model
 {

@@ -4,6 +4,7 @@ namespace App\Models\Registrar;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Image; 
 
 class Faculty extends Model
 {
@@ -12,12 +13,13 @@ class Faculty extends Model
     public $timestamps = true;
 
 
+
     protected $fillable = [
         'fname',
         'mname',
         'lname',
         'extension',
-        'email',
+        'email'  => 'lname'.'sna@edu.ph',
         'contact_no',
         'position',
         'department',
@@ -29,4 +31,12 @@ class Faculty extends Model
         'zip_code',
         'is_active',
     ];
+
+    public function student() {
+        return $this->hasMany(StudentProfiling::class);
+    }
+    public function image(){
+        return $this->belongsTo(Image::class);
+    }
+
 }

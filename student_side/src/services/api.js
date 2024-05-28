@@ -2,7 +2,8 @@ import axios from "axios";
 
 // axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
-const API_URL = "http://127.0.0.1:8000/api/"
+const API_URL = "http://127.0.0.1:8000/api/";
+// const API_URL = "http://192.168.43.240:8000/api/";
 
 const api = axios.create({
     baseURL: API_URL
@@ -29,28 +30,26 @@ export async function fetchCurrentUser() {
         const response = await api.get('/user', {
             params: {
                 with: 'studentProfile' // Include studentProfile relationship
-            }
+            },
+        
         });
         return response.data;
+        // console.log(response);
     } catch (error) {
         throw new Error('Failed to fetch current user');
     }
 }
-// Function to update profile picture
-export async function updateProfilePicture(userId, newProfilePicture) {
-    try {
-        const formData = new FormData();
-        formData.append('profile_picture', newProfilePicture);
 
-        const response = await api.post('/user/${userId}/update-profile-picture', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to update profile picture');
-    }
-}
+// Function to fetch borrowed books data
+// export async function fetchBorrowStatusForCurrentUser() {
+//     try {
+//         const response = await api.get('/borrowstatus/user');
+//         console.log('Borrow status API response:', response.data); // Log the response
+//         return response.data;
+//     } catch (error) {
+//         throw new Error('Failed to fetch borrow status data for the current user');
+//     }
+// }
+
 
 export default api

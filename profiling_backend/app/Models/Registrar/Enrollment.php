@@ -19,7 +19,6 @@ class Enrollment extends Model
 
     public $fillable = [
         'student_id', // Foreign key column
-        'adviser_id',
         'year',
         'strand',
         'grade_level',

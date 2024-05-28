@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <div class="app">
-      <template v-if="!isLoginPage"> <!-- Only render sidebar and header if not on login page -->
-        <Sidebar  />
+      <template v-if="shouldRenderComponents"> <!-- Render sidebar and header if not on login page or if authenticated -->
+        <Sidebar v-if="isAuthenticated" />
         <div class="headerAndContent">
-          <Header />
+          <Header v-if="isAuthenticated" />
           <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
               <Component :is="Component" />
@@ -25,18 +25,42 @@ import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
 
 export default {
-name: 'App',
-components: {
-Sidebar, 
-Header,
-},
-computed: {
-isLoginPage() {
-  // Check if the current route is the login page
-  return this.$route.path === '/login';
-},
-},
-
+  name: 'App',
+  components: {
+    Sidebar,
+    Header,
+  },
+  data() {
+    return {
+      isAuthenticated: false,
+    };
+  },
+  computed: {
+    shouldRenderComponents() {
+      return !this.isLoginPage || this.isAuthenticated;
+    },
+    isLoginPage() {
+      // Check if the current route is the login page
+      return this.$route.path === '/login';
+    },
+  },
+  watch: {
+    '$route'() {
+      // Update authentication status whenever route changes
+      this.isAuthenticated = this.checkAuthentication();
+    },
+  },
+  created() {
+    // Check authentication status on component creation
+    this.isAuthenticated = this.checkAuthentication();
+  },
+  methods: {
+    checkAuthentication() {
+      // Check if the user is authenticated
+      const token = sessionStorage.getItem('token');
+      return token !== null; // Check if token exists
+    },
+  },
 };
 </script>
 
@@ -48,7 +72,8 @@ isLoginPage() {
 --dark-alt: #334155;
 --light:#cdd1da;
 --sidebar-width:250px;
---header-height:100px
+--header-height: 80px
+
 }
 
 * {
@@ -86,12 +111,25 @@ main {
       .left-container {
         flex: 1;
 
+        .top-left{
+          border-right: 4px solid var(--dark-alt);
+        }
+
+        .bottom-left{
+          border-right: 4px solid var(--dark-alt);
+        }
+
       }
       .right-container {
           flex: 1;
+        .profile{
+          border-left: 4px solid var(--dark-alt);
 
         }
-      
+        }
+      .bottom-container{
+        flex-direction: column;
+      }
   }
 }
 .headerAndContent {

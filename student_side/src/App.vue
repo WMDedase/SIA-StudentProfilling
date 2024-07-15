@@ -122,9 +122,8 @@ main {
       }
       .right-container {
           flex: 1;
-        .profile{
+        .vmg{
           border-left: 4px solid var(--dark-alt);
-
         }
         }
       .bottom-container{

@@ -1,7 +1,7 @@
 <script setup>
 import api from '../services/api'
 import Swal from 'sweetalert2'
-
+import PolicyNotice from '../components/PolicyNotice.vue';
 </script>
 <template >
   <v-app class="app">
@@ -64,9 +64,7 @@ import Swal from 'sweetalert2'
                         <v-btn rectangle color="var(--dark)" @click="login" style="color:white; text-decoration: none; font-size: 15px; ">Log in</v-btn>
                       </div>
                       <div class="text-center pb-2">
-                        <a href="" style="display: inline-block;">
-                          St. Nicholas Academy General Privacy Notice
-                        </a>
+                          <PolicyNotice/>
                       </div>
                     </v-col>
                   </v-row>
@@ -79,8 +77,12 @@ import Swal from 'sweetalert2'
 </template>
 
 <script>
+
  export default {
 
+  components: {
+    PolicyNotice
+    },
     data: () => ({
       step: 1,
       email: '',

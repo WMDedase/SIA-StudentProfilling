@@ -38,9 +38,9 @@ onMounted(async () => {
                     <DocxRequestForm/>
                   </div>
                 </div>
-  
+                    
                 <div class="profile-pic">
-                    <img src="../assets/student.svg" alt="">
+                    <img src="../assets/student.svg" alt="" >
                 </div>
                   <div class="content">
                       <div class="left">

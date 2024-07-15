@@ -69,11 +69,12 @@ onMounted(async () => {
         </div>
         
         <div class="right-container" > 
+          <div class="vmg">
           <h4>St. Nicholas Academy of Castillejos</h4>
           <h5>MISSION - VISION - GOALS</h5>
-
-          <div class="vmg">
-          <div class="vision">
+          
+            <VMG></VMG>
+          <!-- <div class="vision">
               <h5>VISION</h5>
               <h6>St. Nicholas Academy of Castillejos, Inc., envisions a Christ centered,
                 dynamic, and effective community that adheres to Catholic philosophy of
@@ -106,8 +107,9 @@ onMounted(async () => {
                 <p>To ensure that our school is managed efficiently and effectively.</p>
                 <p>To ensure that our school makes effective use of information and communication technology and learning resources to support student learning and management for academic affairs.</p>
               </h6>
-          </div>
+          </div> -->
         </div>
+
       </div>
     </div>
     </main>
@@ -115,10 +117,11 @@ onMounted(async () => {
 
 <script>
 import DocxRequestForm from '../components/DocxRequestForm.vue';
-
+import VMG from '../components/VMG.vue';
 export default {
     components: {
-      DocxRequestForm
+      DocxRequestForm,
+      VMG 
     },
     data (){
     return {
@@ -196,12 +199,11 @@ main {
 } 
 .bottom-container{
     display: flex;
-
+  
     .left-container{
         flex: 0.5;
         margin-right: 1rem;
         margin-bottom: 1rem;
-        border: 1px;
         .top-left{
             padding: 1rem;
             margin-bottom: 2rem;
@@ -239,7 +241,7 @@ main {
                 color: var(--dark);
                 font-weight: 600;
                 padding: 0.6rem;
-                
+                text-align: center;
             }
     
         }
@@ -278,27 +280,28 @@ main {
         flex: 0.6;
         border-radius: 5px;
         margin-bottom: 1rem;
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-        padding: 1rem;
-        border-right: 4px solid var(--dark-alt);
-        h4{
-          text-align: center;
-          color: var(--dark);
-          font-weight: 900;
-          text-transform: uppercase;
-          text-shadow: 0 0 1px;
-        }
 
-        h5{
-          text-align: center;
-          color: var(--dark);
-          font-weight: 900;
-        }
             .vmg{
               display: flex;
               flex-direction: column;
               gap: 1rem;
+              box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+              padding: 1rem;
+              border-right: 4px solid var(--dark-alt);
 
+              h4{
+                text-align: center;
+                color: var(--dark);
+                font-weight: 900;
+                text-transform: uppercase;
+                text-shadow: 0 0 1px;
+              }
+      
+              h5{
+                text-align: center;
+                color: var(--dark);
+                font-weight: 900;
+              }
             .vision{
               box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
               padding: 1.5rem;

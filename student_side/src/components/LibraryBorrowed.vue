@@ -1,19 +1,31 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-// import { fetchBorrowStatusForCurrentUser } from '../services/api'
+import { fetchCurrentUser } from '../services/api';
 
-// const borrowedBooks = ref(null);
+const currentUser = ref(null);
+const loading = ref(true);
+const error = ref(null);
 
-// onMounted(async () => {
-//   try {
-//       // Fetch borrow status data for the currently logged-in student
-//       borrowedBooks.value = await fetchBorrowStatusForCurrentUser();
-//       console.log('Borrowed books data:', borrowedBooks.value);
-//   } catch (error) {
-//       console.error('Failed to fetch current user or borrowed books:', error.message);
-//   }
-// });
+onMounted(async () => {
+  try {
+    const response = await fetchCurrentUser();
+    console.log('API response:', response); // Log the entire response object
 
+    console.log(response.student_profile);
+    currentUser.value = response.student_profile;
+    if (response.student_profile && response.student_profile.length > 0) {
+    //   currentUser.value = response.student[0];
+      console.log('Current user data:', currentUser.value); // Log the current user data
+    } else {
+      error.value = 'No student data found';
+    }
+  } catch (err) {
+    error.value = 'Failed to fetch current user';
+    console.error('Error:', err); // Log any error that occurs
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <template>
@@ -30,6 +42,20 @@ import { ref, onMounted } from 'vue';
     
   </template>
 
+  <template v-slot:item="{ item }">
+    <tr :key="item.borrow_id">
+      <td>{{ item.book_title }}</td>
+      <td>{{ item.borrow_status }}</td>
+      <td>{{ item.return_duedate }}</td>
+      <td>{{ item.return_date || 'N/A' }}</td>
+    </tr>
+  </template>
+
+  <template v-slot:no-data>
+      No borrowed books found.
+
+  </template>
+
   </v-data-table>
   
   <!-- <div v-else>
@@ -44,13 +70,14 @@ export default {
     data () {
     return {
     headers: [
-      { title: 'Book Name', align: 'start', key: 'book_id' },
-      // { title: 'Student ID', key: 'borrow_status' },
-      { title: 'Book Status', key: 'borrow_status' },
-      { title: 'Due Date', key: 'return_duedate' },
-      { title: 'Return Date', key: 'return_date' }
-    ],
-}
+        { title: 'Book Name', key: 'book_title' },
+        { title: 'Book Status', key: 'borrow_status' },
+        { title: 'Due Date', key: 'return_duedate' },
+        { title: 'Return Date', key: 'return_date' }
+      ],
+      borrowedBooks: [],
+
+} 
     
 },
 

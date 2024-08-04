@@ -1,18 +1,31 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchCurrentUser } from '../services/api'
+import { fetchCurrentUser } from '../services/api';
 
 const currentUser = ref(null);
+const loading = ref(true);
+const error = ref(null);
 
 onMounted(async () => {
   try {
-    currentUser.value = await fetchCurrentUser();
-    console.log('Current user data:', currentUser.value);
-  } catch (error) {
-    console.error('Failed to fetch current user:', error.message);
+    const response = await fetchCurrentUser();
+    console.log('API response:', response); // Log the entire response object
+
+    console.log(response.student_profile);
+    currentUser.value = response.student_profile;
+    if (response.student_profile && response.student_profile.length > 0) {
+    //   currentUser.value = response.student[0];
+      console.log('Current user data:', currentUser.value); // Log the current user data
+    } else {
+      error.value = 'No student data found';
+    }
+  } catch (err) {
+    error.value = 'Failed to fetch current user';
+    console.error('Error:', err); // Log any error that occurs
+  } finally {
+    loading.value = false;
   }
 });
-
 </script>
 
 <template>
@@ -28,7 +41,20 @@ onMounted(async () => {
 
     <div class="bottom-container">
 
-        <div class="left">
+        <div class="left-container">
+            <div class="pending-table">
+                <h3><span class="material-icons"> pending_actions</span>Pending Documents</h3>
+
+                
+                <PendingTable/>
+
+            </div>
+            
+
+        </div>
+
+        <div class="right-container">
+
             <div class="profile">
 
                 <div class="profile_header">
@@ -42,47 +68,49 @@ onMounted(async () => {
                 <div class="profile-pic">
                     <img src="../assets/student.svg" alt="" >
                 </div>
-                  <div class="content">
-                      <div class="left">
+                    <div v-if="loading"></div>
+                    <div v-if="error"></div>
+                    <div v-if="currentUser" class="content">
+                        <div class="left">
       
                           <h5>School Information</h5>
                           
                           <h7>Student ID:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.student_id }}</h6>
+                          <h6 >{{ currentUser.student_id }}</h6>
       
                           <h7>LRN:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.student_lrn }}</h6>
+                          <h6 >{{ currentUser.student_lrn }}</h6>
                           
-                          <h7>Grade Level:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.grade_level }}</h6>
+                          <h7 >Grade Level:</h7>
+                          <h6 >{{ currentUser.grade_level }}</h6>
       
                           <h7>Strand:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.strand }}</h6>
+                          <h6 >{{ currentUser.strand }}</h6>
       
                           <h7>Section:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.section }}</h6>
+                          <h6>{{ currentUser.section }}</h6>
       
                           <h7>Adviser:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.adviser.fname  + ' ' + currentUser.student_profile.adviser.lname}}</h6>
+                          <h6 >{{ currentUser.adviser.fname  + ' ' + currentUser.adviser.lname}}</h6>
       
                           <h7>Enrollment Status:</h7>
-                          <h6 style="color: green; font-weight:900;" v-if="currentUser">{{ currentUser.student_profile.enrollment_status}}</h6>
+                          <h6 style="color: green; font-weight:900;" >{{ currentUser.enrollment_status}}</h6>
                       </div>
       
                       <div class="right">
                           <h5>Personal Information</h5>
       
                           <h7>Name:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.first_name}} {{ currentUser.student_profile.middle_name}} {{ currentUser.student_profile.last_name}}</h6>
+                          <h6 >{{ currentUser.first_name}} {{ currentUser.middle_name}} {{ currentUser.last_name}}</h6>
       
                           <h7>Gender:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.sex_at_birth}}</h6>
+                          <h6 >{{ currentUser.sex_at_birth}}</h6>
       
                           <h7>Birth Date:</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.birth_date}}</h6>
+                          <h6 >{{ currentUser.student_profile.birth_date}}</h6>
       
                           <h7>Address:</h7>
-                          <h6  v-if="currentUser">{{ currentUser.student_profile.street}}, {{ currentUser.student_profile.barangay}}, {{ currentUser.student_profile.city}}, {{ currentUser.student_profile.province}}</h6>
+                          <h6  >{{ currentUser.street}}, {{ currentUser.barangay}}, {{ currentUser.city}}, {{ currentUser.province}}</h6>
       
                           <!-- <h7>Email Address</h7>
                           <h6 v-if="currentUser">{{ currentUser.student_profile.email}}</h6> -->
@@ -91,19 +119,17 @@ onMounted(async () => {
                   </div>
           </div>
         </div>
-
-        <div class="right">
-
-        </div>
     </div>
 </main>
 </template>
 
 <script>
 import DocxRequestForm from '../components/DocxRequestForm.vue';
+import PendingTable from '../components/PendingTable.vue';
 export default {
     components: {
-      DocxRequestForm
+      DocxRequestForm,
+      PendingTable
     },
 }
 </script>
@@ -152,20 +178,46 @@ main {
 .bottom-container{
     display: flex;
     justify-content: center;
+    gap: 2rem;
 
-    .left{
-        flex: 0.6;
+    .left-container{
+        flex: 0.5;
         color: var(--dark);
         border-radius: 5px;
         margin-bottom: 0.2rem;
+
+        .pending-table{
+            margin-bottom: 0.2rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--dark-alt);
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+
+            h3 {
+                text-shadow: 0 0 1px;
+                font-size: 20px;
+                flex: 1;
+                margin-bottom: 1rem;
+                  .material-icons{
+                    position:relative;
+                    font-size: 35px;
+                    top: 10px;
+                }
+              }
+
+        }
+
+    }
+
+    .right-container{
+        flex: 0.5;
 
         .profile{
             color: var(--dark);
             margin-bottom: 0.2rem;
             padding: 0.5rem;
-            border-radius: 5px;
+            border-radius: 10px;
             border-right: 4px solid var(--dark-alt);
-            border-left: 4px solid var(--dark-alt);
             box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
             display: flex;
             flex-direction: column;
@@ -260,11 +312,6 @@ main {
               }
        
 }
-
-    }
-
-    .right{
-        
     }
 }
 </style>

@@ -22,9 +22,18 @@
               Guidance Status
             </v-card-title>
           </v-card-item>
-          <v-card-text :style="{ color: statusColor }" class="status">
-            <v-icon :color="statusColor" class="mr-2">{{ statusIcon }}</v-icon>
-            {{ statusText }}
+          <v-card-text v-if="currentUser" class="status">
+
+            <h4 :style="{ color: statusColor }" class="fw-bolder">            
+              <span >
+              <span :style="{ color: statusColor }" v-if="guidanceStatus === 'Cleared'" class="material-icons">check_circle</span>
+              <span :style="{ color: statusColor }"  v-else class="material-icons">error
+                
+              </span>
+            </span> 
+            
+            {{ guidanceStatus }}
+          </h4>
           </v-card-text>
         </v-card>
 
@@ -68,31 +77,23 @@ export default {
     },
     data() {
       return {
-        statusKey: 'Not Yet Cleared',
-        statusMap: {
-        Cleared: { text: 'Cleared', color: 'green', icon: 'mdi-check-circle' },
-        'Not Yet Cleared': { text: 'Not Yet Cleared', color: '#dbc501', icon: 'mdi-alert-circle' }
-      }
+
       };
     },
     computed: {
-    statusText() {
-      return this.statusMap[this.statusKey].text;
+    guidanceStatus() {
+      return this.currentUser?.guidance?.status || 'Not Cleared';
     },
     statusColor() {
-      return this.statusMap[this.statusKey].color;
-    },
-    statusIcon() {
-      return this.statusMap[this.statusKey].icon;
-    },
-    statusClass() {
-      return 'status ' + this.statusColor + '--text';
+      switch (this.guidanceStatus) {
+        case 'Cleared':
+          return 'green';
+        case 'Not Cleared':
+          return '#dbc501'; // Yellow color
+        default:
+          return 'gray'; // Default color for unknown statuses
+      }
     }
-  },
-  // Assume you receive the status key from the backend
-  created() {
-    // Fetch status key from backend and assign it to this.statusKey
-    // Example: this.statusKey = responseData.status;
   }
 
 }
@@ -158,7 +159,6 @@ export default {
       .status{
         padding: 1.5rem;
         font-size: 25px;
-        font-weight: bolder;
       
       }
     }

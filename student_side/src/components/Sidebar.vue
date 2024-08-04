@@ -74,17 +74,27 @@ watchEffect(() => {
             <transition name="fade">
             <div class="dropdown-content" v-if="isDropdownOpen" @click.stop>
                 <!-- Five tabs in the dropdown -->
-                <!-- <router-link to="/inventory"><span class="material-icons">inventory</span><span class="text">Inventory</span></router-link> -->
+                <router-link to="/clinic"><span class="material-icons">medical_services</span><span class="text">Clinic</span></router-link>
                 <router-link to="/guidance"><span class="material-icons">accessibility</span><span class="text">Guidance</span></router-link>
                 <router-link to="/library"><span class="material-icons">book</span><span class="text">Library</span></router-link>
             </div>
             </transition>
         </div>
 
+        <router-link class="button" to="/schedule">
+          <span class="material-icons">calendar_month</span>
+          <span class="text">Schedule</span>
+      </router-link>
+
         <router-link class="button" to="/profile">
           <span class="material-icons">account_circle</span>
           <span class="text">Profile</span>
       </router-link>
+
+      <router-link class="button" to="/scheduling">
+        <span class="material-icons">edit_calendar</span>
+        <span class="text">Subject Scheduling</span>
+    </router-link>
 
       </div>
 

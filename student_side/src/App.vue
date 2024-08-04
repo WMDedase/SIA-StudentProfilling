@@ -119,12 +119,25 @@ main {
           border-right: 4px solid var(--dark-alt);
         }
 
+        .pending-table{
+          border-right: 4px solid var(--dark-alt);
+
+        }
+
       }
-      .right-container {
+        .right-container {
           flex: 1;
+
         .vmg{
           border-left: 4px solid var(--dark-alt);
         }
+
+        .profile{
+          border-left: 4px solid var(--dark-alt);
+
+        }
+
+
         }
       .bottom-container{
         flex-direction: column;

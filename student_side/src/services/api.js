@@ -3,7 +3,7 @@ import axios from "axios";
 // axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
 const API_URL = "http://127.0.0.1:8000/api/";
-// const API_URL = "http://192.168.43.240:8000/api/";
+// const API_URL = "http://192.168.1.62:8000/api/";
 
 const api = axios.create({
     baseURL: API_URL
@@ -27,7 +27,7 @@ api.interceptors.request.use(
 // Function to fetch current user's data
 export async function fetchCurrentUser() {
     try {
-        const response = await api.get('/user', {
+        const response = await api.get('user', {
             params: {
                 with: 'studentProfile' // Include studentProfile relationship
             },
@@ -37,6 +37,25 @@ export async function fetchCurrentUser() {
         // console.log(response);
     } catch (error) {
         throw new Error('Failed to fetch current user');
+    }
+}
+
+export async function fetchDocxForCurrentUser() {
+    try {
+        const response = await api.get('/borrowstatus/user');
+        console.log('Borrow status API response:', response.data); // Log the response
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to fetch borrow status data for the current user');
+    }
+}
+// Function to post a document request
+export async function postDocumentRequest(requestData) {
+    try {
+        const response = await api.post('/docreq', requestData);
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to submit document request');
     }
 }
 

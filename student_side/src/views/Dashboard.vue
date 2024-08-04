@@ -1,19 +1,33 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchCurrentUser } from '../services/api'
+import { fetchCurrentUser } from '../services/api';
 
 const currentUser = ref(null);
+const loading = ref(true);
+const error = ref(null);
 
 onMounted(async () => {
   try {
-    currentUser.value = await fetchCurrentUser();
-    console.log('Current user data:', currentUser.value);
-  } catch (error) {
-    console.error('Failed to fetch current user:', error.message);
+    const response = await fetchCurrentUser();
+    console.log('API response:', response); // Log the entire response object
+
+    console.log(response.student_profile);
+    currentUser.value = response.student_profile;
+    if (response.student_profile && response.student_profile.length > 0) {
+    //   currentUser.value = response.student[0];
+      console.log('Current user data:', currentUser.value); // Log the current user data
+    } else {
+      error.value = 'No student data found';
+    }
+  } catch (err) {
+    error.value = 'Failed to fetch current user';
+    console.error('Error:', err); // Log any error that occurs
+  } finally {
+    loading.value = false;
   }
 });
-
 </script>
+
 <template>
     <main>
 
@@ -38,9 +52,13 @@ onMounted(async () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(status, clearance) in clearanceStatus" :key="clearance">
-                      <td>{{ clearance }}</td>
-                      <td :style="{ color: status.color }">{{ status.text }}</td>
+                    <tr v-if="currentUser">
+                      <td >Guidance</td>
+                      <td :style="{ color: statusColor }">{{ guidanceStatus }}</td>
+                    </tr>
+                    <tr v-if="currentUser">
+                      <td>Library</td>
+                      <td :style="{ color: statusColor }">{{ libraryStatus }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -61,8 +79,8 @@ onMounted(async () => {
                         <td>All requirements have been successfully fulfilled, and the clearance process is complete.</td>
                     </tr>
                       <tr>
-                        <td style="color: #dbc501;" class="fw-bold">Not Yet Cleared</td>
-                        <td>Clearance process is ongoing, awaiting approval or completion of remaining tasks. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>                    </tr>
+                        <td style="color: #dbc501;" class="fw-bold">Not Cleared</td>
+                        <td>The clearance process is ongoing. Approval or completion of remaining tasks is required. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -125,34 +143,28 @@ export default {
     },
     data (){
     return {
-      clearanceStatus: {
-        Guidance: { text: '', color: '' },
-        Library: { text: '', color: '' }
-      },
-      // Assume the status key for each clearance area is initially 'Pending'
-      statusKey: 'Not Yet Cleared',
-      statusMap: {
-        Cleared: { text: 'Cleared', color: 'green' },
-        'Not Yet Cleared': { text: 'Not Yet Cleared', color: '#dbc501' }
-      }
     };
   },
   methods: {
-    // Dynamically update the clearance status based on the status key
-    updateClearanceStatus() {
-      for (const clearance in this.clearanceStatus) {
-        if (Object.hasOwnProperty.call(this.clearanceStatus, clearance)) {
-          this.clearanceStatus[clearance].text = this.statusMap[this.statusKey].text;
-          this.clearanceStatus[clearance].color = this.statusMap[this.statusKey].color;
-        }
+
+  },
+  computed: {
+    guidanceStatus() {
+      return this.currentUser?.guidance?.status || 'Not Cleared';
+    },
+    libraryStatus() {
+      return this.currentUser?.library?.status || 'Not Cleared';
+    },
+    statusColor() {
+      switch (this.guidanceStatus,this.libraryStatus) {
+        case 'Cleared':
+          return 'green';
+        case 'Not Cleared':
+          return '#dbc501'; // Yellow color
+        default:
+          return 'gray'; // Default color for unknown statuses
       }
     }
-  },
-  // Assume you receive the status key from the backend
-  created() {
-    // Fetch status key from backend and assign it to this.statusKey
-    // Example: this.statusKey = responseData.status;
-    this.updateClearanceStatus();
   }
 };
 </script>
@@ -203,7 +215,7 @@ main {
     .left-container{
         flex: 0.5;
         margin-right: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 2em;
         .top-left{
             padding: 1rem;
             margin-bottom: 2rem;
@@ -278,7 +290,6 @@ main {
     
     .right-container{
         flex: 0.6;
-        border-radius: 5px;
         margin-bottom: 1rem;
 
             .vmg{
@@ -288,6 +299,7 @@ main {
               box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
               padding: 1rem;
               border-right: 4px solid var(--dark-alt);
+              border-radius: 5px;
 
               h4{
                 text-align: center;

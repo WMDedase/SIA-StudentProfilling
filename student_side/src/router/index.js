@@ -22,13 +22,13 @@ const router = createRouter({
         requiresAuthentication: true, 
       },
     },
-    // {
-    //     path: '/inventory',
-    //     component: () => import('../views/Status Tab/InventoryStatus.vue'),
-    //     meta: {
-    //       requiresAuthentication: true, 
-    //     },
-    // },
+    {
+        path: '/clinic',
+        component: () => import('../views/Status Tab/ClinicStatus.vue'),
+        meta: {
+          requiresAuthentication: true, 
+        },
+    },
     {
         path: '/guidance',
         component: () => import('../views/Status Tab/GuidanceStatus.vue'),
@@ -50,6 +50,21 @@ const router = createRouter({
         requiresAuthentication: true, 
       },
     },
+    {
+      path: '/schedule',
+      component: () => import('../views/Schedule.vue'),
+      meta: {
+        requiresAuthentication: true, 
+      },
+    },
+    {
+      path: '/scheduling',
+      component: () => import('../views/Subject Scheduling.vue'),
+      meta: {
+        requiresAuthentication: true, 
+      },
+    }
+    
   ]
 });
 

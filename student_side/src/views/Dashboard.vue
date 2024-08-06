@@ -92,40 +92,7 @@ onMounted(async () => {
           <h5>MISSION - VISION - GOALS</h5>
           
             <VMG></VMG>
-          <!-- <div class="vision">
-              <h5>VISION</h5>
-              <h6>St. Nicholas Academy of Castillejos, Inc., envisions a Christ centered,
-                dynamic, and effective community that adheres to Catholic philosophy of
-                education and national development goals.</h6>
-          </div>
 
-          <div class="mission">
-              <h5>MISSION</h5>
-              <h6>
-              <p>To promote the continuing growth of the spiritual, professional, and personal life among members of our school's academic community.</p>
-              <p>To ensure in our school the development of self-directed and responsible Catholic students who are academically and vocationally equipped and ready to serve others;</p>
-              <p>To promote curricular programs that respond to poverty alleviation, justice and peace, environment stewardship and responsible citizenship.</p>
-              <p>To achieve quality and excellent education, deliver responsive and relevant educational services, promote access of education and equity of educational opportunities among different types of students.</p>
-              <p>To achieve efficient and effective school governance practices;</p>
-              <p>To ascertain the institutionalization of religion as the core of the curriculum in our school; and</p>
-              <p>To promote a culture of communion among the members of the academic community in our school.</p>
-            </h6>
-          </div>
-
-          <div class="goals">
-              <h5>GOALS</h5>
-              <h6>
-                <p>To ensure the ACSDI Vision, Mission & Goals serve as norm for our school's operation such that academic policies and programs have to operate in the context of the said Vision, and Goals.</p>
-                <p>To enhance religion as the core of the curriculum geared towards a holistic Christian formation.</p>
-                <p>To coordinate the provision of curricular programs that meet the demands of ACSDI Vision - Mission of Christian formation, academic excellence and relevance to national development goals.</p>
-                <p>To ensure our school provides and promotes holistic approach for student affairs and services and promotes access to quality, relevant. Efficient and effective student services programs.</p>
-                <p>To nurture and develop a Christ-centered research culture in our school and provide an avenue for the development of social relation that has a liberating effect on the amelioration of the immediate community partners.</p>
-                <p>To provide opportunities for professional, spiritual and personal growth and development of our school's personnel.</p>
-                <p>To establish an effective financial management system in our school to support and facilitate the realization of the School Vision, Mission and Goals.</p>
-                <p>To ensure that our school is managed efficiently and effectively.</p>
-                <p>To ensure that our school makes effective use of information and communication technology and learning resources to support student learning and management for academic affairs.</p>
-              </h6>
-          </div> -->
         </div>
 
       </div>

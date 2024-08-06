@@ -57,14 +57,6 @@ const router = createRouter({
         requiresAuthentication: true, 
       },
     },
-    {
-      path: '/scheduling',
-      component: () => import('../views/Subject Scheduling.vue'),
-      meta: {
-        requiresAuthentication: true, 
-      },
-    }
-    
   ]
 });
 

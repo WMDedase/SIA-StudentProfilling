@@ -84,8 +84,8 @@ onMounted(async () => {
                           <h7 >Grade Level:</h7>
                           <h6 >{{ currentUser.grade_level }}</h6>
       
-                          <h7>Strand:</h7>
-                          <h6 >{{ currentUser.strand }}</h6>
+                          <h7 v-if="currentUser.grade_level > 10">Strand:</h7>
+                          <h6 v-if="currentUser.grade_level > 10">{{ currentUser.strand }}</h6>
       
                           <h7>Section:</h7>
                           <h6>{{ currentUser.section }}</h6>
@@ -107,7 +107,7 @@ onMounted(async () => {
                           <h6 >{{ currentUser.sex_at_birth}}</h6>
       
                           <h7>Birth Date:</h7>
-                          <h6 >{{ currentUser.student_profile.birth_date}}</h6>
+                          <h6 >{{ currentUser.birth_date}}</h6>
       
                           <h7>Address:</h7>
                           <h6  >{{ currentUser.street}}, {{ currentUser.barangay}}, {{ currentUser.city}}, {{ currentUser.province}}</h6>

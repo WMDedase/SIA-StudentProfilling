@@ -60,7 +60,7 @@ onMounted(async () => {
 
             <h4 :style="{ color: statusColor }" class="fw-bolder">            
               <span >
-              <span :style="{ color: statusColor }" v-if="guidanceStatus === 'Cleared'" class="material-icons">check_circle</span>
+              <span :style="{ color: statusColor }" v-if="libraryStatus === 'Cleared'" class="material-icons">check_circle</span>
               <span :style="{ color: statusColor }"  v-else class="material-icons">error
                 
               </span>

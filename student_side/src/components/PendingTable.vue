@@ -23,7 +23,6 @@
         </v-toolbar>
       </template>
   
-  
       <template v-slot:item= '{ item }'>
         <tr :key="item.document_id">
           <td style="padding:1rem;">{{ item.school_level}}</td>

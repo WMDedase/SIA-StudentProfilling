@@ -2,8 +2,8 @@ import axios from "axios";
 
 // axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
-const API_URL = "http://127.0.0.1:8000/api/";
-// const API_URL = "http://192.168.1.62:8000/api/";
+// const API_URL = "http://127.0.0.1:8000/api/";
+const API_URL = "http://192.168.31.186:8000/api/";
 
 const api = axios.create({
     baseURL: API_URL
@@ -21,18 +21,22 @@ api.interceptors.request.use(
 
 (error) => {
     return Promise.reject(error);
+
 }
+
 );
 
 // Function to fetch current user's data
 export async function fetchCurrentUser() {
     try {
-        const response = await api.get('user', {
+        const response = await api.get('user',{
             params: {
-                with: 'studentProfile' // Include studentProfile relationship
-            },
-        
-        });
+                with: 'studentProfile'
+            }
+            
+        }
+          );
+
         return response.data;
         // console.log(response);
     } catch (error) {

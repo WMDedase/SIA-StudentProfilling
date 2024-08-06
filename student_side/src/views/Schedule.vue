@@ -1,20 +1,33 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchCurrentUser } from '../services/api'
+import { fetchCurrentUser } from '../services/api';
 
 const currentUser = ref(null);
+const loading = ref(true);
+const error = ref(null);
 
 onMounted(async () => {
   try {
-    currentUser.value = await fetchCurrentUser();
+    const response = await fetchCurrentUser();
+    console.log('API response:', response); // Log the entire response object
 
-    console.log('Current user data:', currentUser.value);
-  } catch (error) {
-    console.error('Failed to fetch current user:', error.message);
+    console.log(response.student_profile);
+    currentUser.value = response.student_profile;
+    if (response.student_profile && response.student_profile.length > 0) {
+    //   currentUser.value = response.student[0];
+      console.log('Current user data:', currentUser.value); // Log the current user data
+    } else {
+      error.value = 'No student data found';
+    }
+  } catch (err) {
+    error.value = 'Failed to fetch current user';
+    console.error('Error:', err); // Log any error that occurs
+  } finally {
+    loading.value = false;
   }
 });
-
 </script>
+
 <template>
     <main>
 
@@ -36,8 +49,8 @@ onMounted(async () => {
             <!-- toolbar  -->
             <template v-slot:top>
               <v-toolbar flat>
-                <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64"></v-toolbar-title>
-                <v-text-field
+                <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">                </v-toolbar-title>
+                <!-- <v-text-field
                 v-model="search"
                 class="w-auto mr-4 "
                 density="compact"
@@ -47,7 +60,7 @@ onMounted(async () => {
                 flat
                 hide-details
                 single-line
-              ></v-text-field>
+              ></v-text-field> -->
         
               </v-toolbar>
             </template>
@@ -57,12 +70,17 @@ onMounted(async () => {
               <tr :key="item.document_id">
                 <td style="padding:1rem;">{{ item.school_level}}</td>
                 <td>{{ item.report_by	}}</td>
-      
+                <td>{{ item.report_by	}}</td>
+                <td>{{ item.report_by	}}</td>
+                <td>{{ item.report_by	}}</td>
+                <td>{{ item.report_by	}}</td>
+                <td>{{ item.report_by	}}</td>
+                <td>{{ item.report_by	}}</td>
+
               </tr>
             </template>
           </v-data-table>
 
-        
     </div>
     </main>
 </template>
@@ -149,8 +167,21 @@ main {
 
 .bottom-container{
     display: flex;
-  
 
+
+  .v-table__wrapper{
+    color: var(--dark);
+    padding: 1.5rem;
+    
+    .v-data-table__th {
+      font-size: 17px;
+      font-weight: 800;
+  
+    }
+  
+  
+  }
+    
 }
 
 </style>

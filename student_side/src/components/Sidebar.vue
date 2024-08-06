@@ -91,11 +91,6 @@ watchEffect(() => {
           <span class="text">Profile</span>
       </router-link>
 
-      <router-link class="button" to="/scheduling">
-        <span class="material-icons">edit_calendar</span>
-        <span class="text">Subject Scheduling</span>
-    </router-link>
-
       </div>
 
       <hr class="hr">

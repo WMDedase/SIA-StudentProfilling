@@ -54,11 +54,41 @@ onMounted(async () => {
                   <tbody>
                     <tr v-if="currentUser">
                       <td >Guidance</td>
-                      <td :style="{ color: statusColor }">{{ guidanceStatus }}</td>
+                      <td :style="{ color: currentUser.guidance.case_status === 0 ? 'green' : '#dbc501' }">{{ currentUser.guidance.case_status === 0 ? 'Cleared' : 'Not Cleared' }}</td>
                     </tr>
                     <tr v-if="currentUser">
                       <td>Library</td>
-                      <td :style="{ color: statusColor }">{{ libraryStatus }}</td>
+                      <td :style="{ color: currentUser.library.status === 'Cleared' ? 'green' : '#dbc501' }">{{ currentUser.library.status }}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Registrar
+                      </td>
+                      <!-- <td v-if="currentUser  " :style="{ color: currentUser.library.status === 'Cleared' ? 'green' : '#dbc501' }">
+                        {{ currentUser.library.status }}
+                      </td> -->
+                      <td class="requirements" >
+                        <thead>
+                        <tr class="table-head">
+                          <th>Requirement</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr >
+                          <td>PSA/Birth Certificate</td>
+                          <td class="status">Pending</td>
+                        </tr>
+                        <tr >
+                          <td>Good Moral</td>
+                          <td class="status">Pending</td>
+                        </tr>
+                        <tr>
+                          <td>Form-137/A</td>
+                          <td class="status">Pending</td>
+                        </tr>
+                        </tbody>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -80,7 +110,12 @@ onMounted(async () => {
                     </tr>
                       <tr>
                         <td style="color: #dbc501;" class="fw-bold">Not Cleared</td>
-                        <td>The clearance process is ongoing. Approval or completion of remaining tasks is required. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>                    </tr>
+                        <td>The clearance process is ongoing. Approval or completion of remaining tasks is required. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>                    
+                      </tr>
+                      <tr>
+                        <td style="color: #dbc501;" class="fw-bold">Pending</td>
+                        <td>The clearance process is ongoing. Approval or completion of remaining tasks is required. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>                    
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -116,22 +151,7 @@ export default {
 
   },
   computed: {
-    guidanceStatus() {
-      return this.currentUser?.guidance?.status || 'Not Cleared';
-    },
-    libraryStatus() {
-      return this.currentUser?.library?.status || 'Not Cleared';
-    },
-    statusColor() {
-      switch (this.guidanceStatus,this.libraryStatus) {
-        case 'Cleared':
-          return 'green';
-        case 'Not Cleared':
-          return '#dbc501'; // Yellow color
-        default:
-          return 'gray'; // Default color for unknown statuses
-      }
-    }
+
   }
 };
 </script>
@@ -163,6 +183,7 @@ main {
             font-size: 2rem;
             top: 4px;
         }
+
         .text{
             position: relative;
             color: var(--dark);
@@ -222,6 +243,28 @@ main {
                 padding: 0.6rem;
                 text-align: center;
             }
+
+            .requirements{
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+
+              .table-head{
+                display: flex;
+                gap: 2.5rem;
+                
+                th{
+                  font-size: 18px;
+                }
+              }
+
+              .status{
+                color:#dbc501
+              }
+            }
+
+
+
     
         }
         .bottom-left{

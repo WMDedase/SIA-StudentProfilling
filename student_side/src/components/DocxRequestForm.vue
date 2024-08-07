@@ -26,13 +26,13 @@ onMounted(async () => {
           prepend-icon="mdi-file-document"
           v-bind="activatorProps"
           style="color: white;"
+
         >Request Documents</v-btn>
       </template>
   
-      <v-card
-        prepend-icon="mdi-file-document"
-        title="Document Request Form"
-      >
+      <v-card >
+        <v-card-title class="fw-bold" style="padding:1.2rem;background-color: var(--dark); color:white; border-radius:3px;"><span class="material-icons" style="position:relative; right:5px; top:5px;">description</span>Document Request Form</v-card-title>
+
         <v-card-text>
           <!-- Document Request Form -->
           <v-row dense>
@@ -173,7 +173,7 @@ onMounted(async () => {
         }
 
 
-        axios.post('docreq',  data ).then(res=>{
+        axios.post('/docreq',  data ).then(res=>{
           
           this.dialog = false;
           Swal.fire({
@@ -199,5 +199,6 @@ onMounted(async () => {
   };
   </script>
   
-  <style lang="scss">
+  <style lang="scss" scoped>
+
   </style>

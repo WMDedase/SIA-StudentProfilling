@@ -1,3 +1,32 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { fetchCurrentUser } from '../../services/api';
+
+const currentUser = ref(null);
+const loading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  try {
+    const response = await fetchCurrentUser();
+    console.log('API response:', response); // Log the entire response object
+
+    console.log(response.student_profile);
+    currentUser.value = response.student_profile;
+    if (response.student_profile && response.student_profile.length > 0) {
+    //   currentUser.value = response.student[0];
+      console.log('Current user data:', currentUser.value); // Log the current user data
+    } else {
+      error.value = 'No student data found';
+    }
+  } catch (err) {
+    error.value = 'Failed to fetch current user';
+    console.error('Error:', err); // Log any error that occurs
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
 <template>
   <main>
   
@@ -22,19 +51,19 @@
               Guidance Status
             </v-card-title>
           </v-card-item>
-          <v-card-text v-if="currentUser" class="status">
+          
+          <v-card-text v-if="currentUser" class="status"
+          :style="{ color: currentUser.guidance.case_status === 0 ? 'green' : '#dbc501' }">
+          
+          <v-icon
+            :color="currentUser.guidance.case_status === 0 ? 'green' : '#dbc501'"
+            class="status-icon"
+          >
+            {{ currentUser.guidance.case_status === 0 ? 'mdi-check-circle' : 'mdi-alert-circle' }}
+          </v-icon>
+          {{ currentUser.guidance.case_status === 0 ? 'Cleared' : 'Not Cleared' }}
+        </v-card-text>
 
-            <h4 :style="{ color: statusColor }" class="fw-bolder">            
-              <span >
-              <span :style="{ color: statusColor }" v-if="guidanceStatus === 'Cleared'" class="material-icons">check_circle</span>
-              <span :style="{ color: statusColor }"  v-else class="material-icons">error
-                
-              </span>
-            </span> 
-            
-            {{ guidanceStatus }}
-          </h4>
-          </v-card-text>
         </v-card>
 
       </v-col>

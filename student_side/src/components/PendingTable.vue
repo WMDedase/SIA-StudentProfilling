@@ -1,9 +1,51 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { fetchCurrentUser } from '../services/api';
+
+const documentlist = ref([]);
+const headers = ref([
+    { title: 'Document Type', key: 'document_type' },
+    { title: 'Status', key: 'document_remarks' },
+    { title: 'Release Date', key: 'document_release_date' },
+]);
+const loading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  try {
+    const response = await fetchCurrentUser();
+    console.log('API response:', response); // Log the entire response object
+
+    const requested = response.student_profile?.docreq;
+
+    if (Array.isArray(requested)) {
+      documentlist.value = requested;
+    } else if (requested) {
+      // Wrap single object in array
+      documentlist.value = [requested];
+    } else {
+      error.value = 'No document request found or data is not an array';
+    }
+
+    console.log('Document Request data:', documentlist.value); // Log the borrowedBooks
+  } catch (err) {
+    error.value = 'Failed to fetch current user';
+    console.error('Error:', err); // Log any error that occurs
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
+
 <template>
     <v-data-table 
     :search="search"    
     :headers="headers" 
     :items="documentlist" 
+    :loading="loading"
     :sort-by="[{ key: 'items_name', order: 'asc' }]">
+    
+
       <!-- toolbar  -->
       <template v-slot:top>
         <v-toolbar flat>
@@ -24,10 +66,10 @@
       </template>
   
       <template v-slot:item= '{ item }'>
-        <tr :key="item.document_id">
-          <td style="padding:1rem;">{{ item.school_level}}</td>
-          <td>{{ item.report_by	}}</td>
-
+        <tr :key="item.id">
+          <td style="padding:1rem;">{{ item.document_type}}</td>
+          <td>{{ item.document_remarks	}}</td>
+          <td>{{ item.document_release_date	}}</td>
         </tr>
       </template>
     </v-data-table>
@@ -52,7 +94,7 @@ import Swal from 'sweetalert2';
         document_id: null,
         document_type: '',
         status: '',
-
+        loading: true,
       },
       };
   },
@@ -90,7 +132,6 @@ import Swal from 'sweetalert2';
       font-weight: 800;
   
     }
-  
   
   }
   .icon-container {

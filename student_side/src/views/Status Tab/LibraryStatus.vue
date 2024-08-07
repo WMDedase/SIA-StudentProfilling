@@ -56,18 +56,17 @@ onMounted(async () => {
               Library Status
             </v-card-title>
           </v-card-item>
-          <v-card-text v-if="currentUser" class="status">
+          
+          <v-card-text v-if="currentUser" class="status" 
+            :style="{ color: currentUser.library.status === 'Cleared' ? 'green' : '#dbc501' }">
 
-            <h4 :style="{ color: statusColor }" class="fw-bolder">            
-              <span >
-              <span :style="{ color: statusColor }" v-if="libraryStatus === 'Cleared'" class="material-icons">check_circle</span>
-              <span :style="{ color: statusColor }"  v-else class="material-icons">error
-                
-              </span>
-            </span> 
-            
-            {{ libraryStatus }}
-          </h4>
+            <v-icon 
+              :color="currentUser.library.status === 'Cleared' ? 'green' : '#dbc501'"
+              class="status-icon"
+            >
+              {{ currentUser.library.status === 'Cleared' ? 'mdi-check-circle' : 'mdi-alert-circle' }}
+            </v-icon>
+            {{ currentUser.library.status }}
           </v-card-text>
         </v-card>
       </v-col>
@@ -91,10 +90,6 @@ onMounted(async () => {
     
         <v-card-text>
           <LibraryBorrowed/>
-          <br>
-          <hr>
-          <br>
-          <LibraryHistory/>
         </v-card-text>  
       </v-card>
     </v-col>
@@ -108,30 +103,16 @@ onMounted(async () => {
   
   <script>
 import LibraryBorrowed from '../../components/LibraryBorrowed.vue';
-import LibraryHistory from '../../components/LibraryHistory.vue';
 
 export default {
   components: {
-    LibraryHistory,
     LibraryBorrowed
     },
     data() {
 
     },
     computed: {
-    libraryStatus() {
-      return this.currentUser?.library?.status || 'Not Cleared';
-    },
-    statusColor() {
-      switch (this.libraryStatus) {
-        case 'Cleared':
-          return 'green';
-        case 'Not Cleared':
-          return '#dbc501'; // Yellow color
-        default:
-          return 'gray'; // Default color for unknown statuses
-      }
-    }
+
   }
 
 }

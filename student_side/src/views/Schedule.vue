@@ -45,6 +45,7 @@ onMounted(async () => {
           :search="search"    
           :headers="headers" 
           :items="documentlist" 
+          :loading="loading"
           :sort-by="[{ key: 'items_name', order: 'asc' }]">
             <!-- toolbar  -->
             <template v-slot:top>

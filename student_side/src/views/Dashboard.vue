@@ -7,6 +7,7 @@ const currentUser = ref(null);
 const loading = ref(true);
 const error = ref(null);
 const guidanceStatus = ref('Not Cleared');
+const clinicStatus = ref('Not Cleared');
 
 onMounted(async () => {
   try {
@@ -15,20 +16,32 @@ onMounted(async () => {
 
     if (response.student_profile) {
       currentUser.value = response.student_profile;
+
+      // Guidance status logic
       if (!response.student_profile.guidance || response.student_profile.guidance.length === 0) {
         guidanceStatus.value = 'Cleared';
       } else {
         guidanceStatus.value = response.student_profile.guidance.case_status === 1 ? 'Cleared' : 'Not Cleared';
       }
+
+      // Clinic status logic
+      if (response.student_profile.physical_exam && Object.keys(response.student_profile.physical_exam).length > 0) {
+        clinicStatus.value = 'Cleared';
+      } else {
+        clinicStatus.value = 'Not Cleared';
+      }
+
       console.log('Current user data:', currentUser.value); // Log the current user data
     } else {
       error.value = 'No student data found';
       guidanceStatus.value = 'Cleared'; // Set guidance status to cleared when no data is found
+      clinicStatus.value = 'Not Cleared'; // Set clinic status to not cleared when no data is found
     }
   } catch (err) {
     error.value = 'Failed to fetch current user';
     console.error('Error:', err); // Log any error that occurs
     guidanceStatus.value = 'Cleared'; // Set guidance status to cleared on error
+    clinicStatus.value = 'Not Cleared'; // Set clinic status to not cleared on error
   } finally {
     loading.value = false;
   }
@@ -37,7 +50,12 @@ onMounted(async () => {
 const statusColor = computed(() => {
   return guidanceStatus.value === 'Cleared' ? 'green' : '#dbc501';
 });
+
+const clinicStatusColor = computed(() => {
+  return clinicStatus.value === 'Cleared' ? 'green' : '#dbc501';
+});
 </script>
+
 
 <template>
   <main>
@@ -64,15 +82,13 @@ const statusColor = computed(() => {
             <tbody>
               <tr v-if="currentUser">
                 <td>Clinic</td>
-                <td :style="{ color: statusColor }">
-                  <!-- Removed the icon completely
-                  {{ guidanceStatus }} -->
+                <td :style="{ color: clinicStatusColor }">
+                  {{ clinicStatus }}
                 </td>
               </tr>
               <tr v-if="currentUser">
                 <td>Guidance</td>
                 <td :style="{ color: statusColor }">
-                  <!-- Removed the icon completely -->
                   {{ guidanceStatus }}
                 </td>
               </tr>
@@ -148,6 +164,7 @@ const statusColor = computed(() => {
     </div>
   </main>
 </template>
+
 
 <script>
 import VMG from '../components/VMG.vue';

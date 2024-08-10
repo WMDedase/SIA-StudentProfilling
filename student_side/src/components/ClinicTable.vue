@@ -3,66 +3,73 @@ import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
 
 const currentUser = ref(null);
+const consultations = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
 onMounted(async () => {
   try {
     const response = await fetchCurrentUser();
-    console.log('API response:', response); // Log the entire response object
+    console.log('API response:', response);
 
-    console.log(response.student_profile);
     currentUser.value = response.student_profile;
-    if (response.student_profile && response.student_profile.length > 0) {
-    //   currentUser.value = response.student[0];
-      console.log('Current user data:', currentUser.value); // Log the current user data
+
+    if (response.student_profile?.consultation && Array.isArray(response.student_profile.consultation)) {
+      consultations.value = response.student_profile.consultation;
+      console.log('Consultation data:', consultations.value);
     } else {
-      error.value = 'No student data found';
+      error.value = 'No consultation data found or data is not an array';
     }
+
   } catch (err) {
     error.value = 'Failed to fetch current user';
-    console.error('Error:', err); // Log any error that occurs
+    console.error('Error:', err);
   } finally {
     loading.value = false;
   }
 });
 </script>
+
 <template>
-    <v-data-table
+  <v-data-table
     :headers="headers"
-    :items="clinicTable"
+    :items="consultations"
     :loading="loading"
   >
-  <template v-slot:top>
-    <v-toolbar flat>
-      <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Consultations</v-toolbar-title>
-      
-    </v-toolbar>
-    
-  </template>
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Consultations</v-toolbar-title>
+      </v-toolbar>
+    </template>
 
-  
+    <template v-slot:item="{ item }">
+      <tr :key="item.con_id">
+        <td>{{ item.con_title }}</td>
+        <td>{{ item.con_notes }}</td>
+        <td>{{ item.con_date }}</td>
+      </tr>
+    </template>
+
+    <template v-slot:no-data>
+      {{ error || 'No consultations found.' }}
+    </template>
   </v-data-table>
-  
 </template>
 
 <script>
 export default {
-    data () {
+  data() {
     return {
-    headers: [
-      { title: 'Consultation Title', align: 'start', key: 'title' },
-      { title: 'Consultation Notes', key: 'notes' },
-      { title: 'Date', key: 'date' },
-    ],
-    borrowedItems: [],
-}
-    
-},
-
-}
+      headers: [
+        { title: 'Consultation Title', key: 'con_title' },
+        { title: 'Consultation Notes', key: 'con_notes' },
+        { title: 'Date', key: 'con_date' },
+      ],
+    };
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+/* Add any custom styles here */
 </style>

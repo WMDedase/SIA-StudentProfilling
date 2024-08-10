@@ -3,7 +3,7 @@ import axios from "axios";
 // axios.defaults.baseURL = "http://192.168.31.186:8000/api/";
 
 // const API_URL = "http://127.0.0.1:8000/api/";
-const API_URL = "http://192.168.1.21:8000/api/";
+const API_URL = "http://26.81.173.255:8000/api/";
 
 
 

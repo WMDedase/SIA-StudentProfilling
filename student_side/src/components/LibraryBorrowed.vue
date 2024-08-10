@@ -13,6 +13,20 @@ const headers = ref([
 const loading = ref(true);
 const error = ref(null);
 
+const getStatusText = (status) => {
+  const statusMap = {
+    0: 'Borrowed',
+    1: 'Overdue',
+    2: 'Returned',
+    3: 'Damaged',
+    4: 'Lost',
+    5: 'Damaged Payment',
+    6: 'Lost Payment',
+    7: 'Overdue Pay'
+  };
+  return statusMap[status] || 'Unknown Status';
+};
+
 onMounted(async () => {
   try {
     // Fetch current user data
@@ -35,8 +49,7 @@ onMounted(async () => {
   } catch (err) {
     error.value = 'Failed to fetch current user';
     console.error('Error:', err); // Log any error that occurs
-  } 
-  finally {
+  } finally {
     loading.value = false;
   }
 });
@@ -59,7 +72,7 @@ onMounted(async () => {
     <template v-slot:item="{ item }">
       <tr :key="item.borrow_id">
         <td>{{ item.book_title }}</td>
-        <td>{{ item.borrow_status }}</td>
+        <td>{{ getStatusText(item.borrow_status) }}</td>
         <td>{{ item.return_duedate }}</td>
         <td>{{ item.return_date || 'N/A' }}</td>
       </tr>

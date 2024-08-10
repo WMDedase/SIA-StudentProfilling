@@ -152,10 +152,8 @@ main {
     }
 }
 
-.v-data-table__th {
-  font-weight: bold;
-  font-size: 1.1rem; /* Adjust the size if needed */
-}
+
+
 
 
 </style>

@@ -63,6 +63,13 @@ const statusColor = computed(() => {
             </thead>
             <tbody>
               <tr v-if="currentUser">
+                <td>Clinic</td>
+                <td :style="{ color: statusColor }">
+                  <!-- Removed the icon completely
+                  {{ guidanceStatus }} -->
+                </td>
+              </tr>
+              <tr v-if="currentUser">
                 <td>Guidance</td>
                 <td :style="{ color: statusColor }">
                   <!-- Removed the icon completely -->
@@ -124,7 +131,7 @@ const statusColor = computed(() => {
               </tr>
               <tr>
                 <td style="color: #dbc501;" class="fw-bold">Pending</td>
-                <td>The clearance process is ongoing. Approval or completion of remaining tasks is required. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>
+                <td>Clearance is still in progress. Please check the relevant sections to complete any outstanding tasks and obtain necessary approvals. Ensure all requirements are fulfilled to move forward.</td>
               </tr>
             </tbody>
           </table>

@@ -69,19 +69,7 @@ onMounted(async () => {
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      headers: [
-        { title: 'Title', align: 'start', key: 'title' },
-        { title: 'Description', key: 'description' },
-        { title: 'Sanction', key: 'sanction' },
-        { title: 'Date', key: 'date' }
-      ],
-      studentGuidance: [],
-    };
-  }
-};
+
 </script>
 
 <style>

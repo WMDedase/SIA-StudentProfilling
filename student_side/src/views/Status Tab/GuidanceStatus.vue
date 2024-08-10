@@ -57,8 +57,12 @@ onMounted(async () => {
                 </v-card-title>
               </v-card-item>
 
-              <v-card-text :class="statusColor">
-                <v-icon :color="statusColor" class="status-icon">
+              <v-card-text 
+              :style="{ color: guidanceStatus === 'Cleared' ? 'green' : '#dbc501' }"
+              class="guidance-status"
+              
+              >
+                <v-icon class="status-icon">
                   {{ guidanceStatus === 'Cleared' ? 'mdi-check-circle' : 'mdi-alert-circle' }}
                 </v-icon>
                 {{ guidanceStatus }}
@@ -96,11 +100,7 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    statusColor() {
-      return this.guidanceStatus === 'Cleared' ? 'green' : '#dbc501';
-    }
-  }
+
 };
 </script>
 
@@ -159,7 +159,7 @@ main {
     .top-left {
       border-left: 4px solid var(--dark-alt);
 
-      .status {
+      .guidance-status{
         padding: 1.5rem;
         font-size: 25px;
       }

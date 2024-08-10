@@ -32,12 +32,13 @@ onMounted(async () => {
     <header class="header">
         <h2 class="sna-label">Saint Nicholas Academy Profiling System</h2>
       
-        <!-- <div class="profile" v-if="currentUser">
-          <div class="pic">
+        <div class="profile" v-if="currentUser">
+
+          <h5> {{ currentUser.first_name}} {{ currentUser.middle_name}} {{ currentUser.last_name}}</h5>
+                    <div class="pic">
             <img src="../assets/student.svg" alt="">
           </div>
-          <h5> {{ currentUser.first_name}} {{ currentUser.middle_name}} {{ currentUser.last_name}}</h5>
-        </div> -->
+        </div>
     </header>
     
 </template>
@@ -61,40 +62,48 @@ onMounted(async () => {
     .sna-label{
         flex: 0.5;
         color: #e2e2e2;
-        align-self: center;
-        margin-left: 1rem;
+        align-self: flex-start;
+        margin-left: 0.5rem;
         font-size: 25px;
-
+        @media (max-width: 1050px){
+          .sna-label{
+              font-size: 18px;
+          }
+        }
+  
+      }
     
     .profile{
         flex: 0.5;
-        
-        .pic{
-          width: 40%
-          
-          img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%
-   
-           }
-        }
+        display: flex;
+        justify-content: end;
+        padding-right: 0.5rem;
 
+        .pic{
+          box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+          width: 3.9rem;
+          margin: 1.5rem;
+          border-radius: 50%;
+          background-color: white;
+
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                
+            }
+        }
 
         h5{
-            color: red;
+            color: white;
+            align-self: center;
+            font-size: 17px;
         }
         
     }
 
-      @media (max-width: 1050px){
-        .sna-label{
-            font-size: 18px;
-        }
-      }
 
-    }
 }
 
 </style>

@@ -147,7 +147,7 @@ main {
     .bg-title{
         z-index: -1;
         position: absolute;
-        opacity: 10%;
+        opacity: 6%;
         margin-top: -40px;
         font-size: 100px;
         font-family: Impact, fantasy;
@@ -241,7 +241,7 @@ main {
                 
               .profile-pic{
                 box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-                width: 35%;
+                width: 35%;   
                 align-self: center;
                 margin: 1.5rem;
                 border-radius: 5px;

@@ -114,7 +114,7 @@ main {
     .bg-title {
       z-index: -1;
       position: absolute;
-      opacity: 10%;
+      opacity: 6%;
       margin-top: -40px;
       font-size: 100px;
       font-family: Impact, fantasy;

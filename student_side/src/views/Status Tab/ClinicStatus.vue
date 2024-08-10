@@ -59,7 +59,7 @@ onMounted(async () => {
                 </v-card-title>
               </v-card-item>
               
-              <v-card-text class="status" :style="{ color: physicalExamStatus === 'Cleared' ? 'green' : '#dbc501' }">
+              <v-card-text class="clinic-status" :style="{ color: physicalExamStatus === 'Cleared' ? 'green' : '#dbc501' }">
                 <v-icon :color="physicalExamStatus === 'Cleared' ? 'green' : '#dbc501'" class="status-icon">
                   {{ physicalExamStatus === 'Cleared' ? 'mdi-check-circle' : 'mdi-alert-circle' }}
                 </v-icon>
@@ -146,7 +146,7 @@ main {
     .top-left {
       border-left: 4px solid var(--dark-alt);
 
-      .guidance-status{
+      .clinic-status{
         padding: 1.5rem;
         font-size: 25px;
       }

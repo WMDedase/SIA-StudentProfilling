@@ -8,11 +8,12 @@ const loading = ref(true);
 const error = ref(null);
 const guidanceStatus = ref('Not Cleared');
 const clinicStatus = ref('Not Cleared');
+const libraryStatus = ref('Not Cleared');
 
 onMounted(async () => {
   try {
     const response = await fetchCurrentUser();
-    console.log('API response:', response); // Log the entire response object
+    console.log('API response:', response);
 
     if (response.student_profile) {
       currentUser.value = response.student_profile;
@@ -31,17 +32,26 @@ onMounted(async () => {
         clinicStatus.value = 'Not Cleared';
       }
 
-      console.log('Current user data:', currentUser.value); // Log the current user data
+      // Library status logic
+      if (response.student_profile.library && response.student_profile.library.status) {
+        libraryStatus.value = response.student_profile.library.status;
+      } else {
+        libraryStatus.value = 'Not Cleared';
+      }
+
+      console.log('Current user data:', currentUser.value);
     } else {
       error.value = 'No student data found';
-      guidanceStatus.value = 'Cleared'; // Set guidance status to cleared when no data is found
-      clinicStatus.value = 'Not Cleared'; // Set clinic status to not cleared when no data is found
+      guidanceStatus.value = 'Cleared';
+      clinicStatus.value = 'Not Cleared';
+      libraryStatus.value = 'Not Cleared';
     }
   } catch (err) {
     error.value = 'Failed to fetch current user';
-    console.error('Error:', err); // Log any error that occurs
-    guidanceStatus.value = 'Cleared'; // Set guidance status to cleared on error
-    clinicStatus.value = 'Not Cleared'; // Set clinic status to not cleared on error
+    console.error('Error:', err);
+    guidanceStatus.value = 'Cleared';
+    clinicStatus.value = 'Not Cleared';
+    libraryStatus.value = 'Not Cleared';
   } finally {
     loading.value = false;
   }
@@ -54,8 +64,11 @@ const statusColor = computed(() => {
 const clinicStatusColor = computed(() => {
   return clinicStatus.value === 'Cleared' ? 'green' : '#dbc501';
 });
-</script>
 
+const libraryStatusColor = computed(() => {
+  return libraryStatus.value === 'Cleared' ? 'green' : '#dbc501';
+});
+</script>
 
 <template>
   <main>
@@ -94,9 +107,9 @@ const clinicStatusColor = computed(() => {
               </tr>
               <tr v-if="currentUser">
                 <td>Library</td>
-                <!-- <td :style="{ color: currentUser.library.status === 'Cleared' ? 'green' : '#dbc501' }">
-                  {{ currentUser.library.status }}
-                </td> -->
+                <td :style="{ color: libraryStatusColor }">
+                  {{ libraryStatus }}
+                </td>
               </tr>
               <tr>
                 <td>Registrar</td>
@@ -110,15 +123,15 @@ const clinicStatusColor = computed(() => {
                   <tbody>
                     <tr>
                       <td>PSA/Birth Certificate</td>
-                      <td class="status">Pending</td>
+                      <td class="pending-status">Pending</td>
                     </tr>
                     <tr>
                       <td>Good Moral</td>
-                      <td class="status">Pending</td>
+                      <td class="pending-status">Pending</td>
                     </tr>
                     <tr>
                       <td>Form-137/A</td>
-                      <td class="status">Pending</td>
+                      <td class="pending-status">Pending</td>
                     </tr>
                   </tbody>
                 </td>
@@ -146,7 +159,7 @@ const clinicStatusColor = computed(() => {
                 <td>The clearance process is ongoing. Approval or completion of remaining tasks is required. Students need to address these by accessing respective tabs to view and fulfill the necessary requirements.</td>
               </tr>
               <tr>
-                <td style="color: #dbc501;" class="fw-bold">Pending</td>
+                <td style="color: #FFA500;" class="fw-bold">Pending</td>
                 <td>Clearance is still in progress. Please check the relevant sections to complete any outstanding tasks and obtain necessary approvals. Ensure all requirements are fulfilled to move forward.</td>
               </tr>
             </tbody>
@@ -164,6 +177,7 @@ const clinicStatusColor = computed(() => {
     </div>
   </main>
 </template>
+
 
 
 <script>
@@ -373,5 +387,6 @@ main {
       border-left: 4px solid var(--dark-alt);
     }
   }
+
 }
 </style>

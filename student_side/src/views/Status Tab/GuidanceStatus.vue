@@ -59,9 +59,7 @@ onMounted(async () => {
 
               <v-card-text 
               :style="{ color: guidanceStatus === 'Cleared' ? 'green' : '#dbc501' }"
-              class="guidance-status"
-              
-              >
+              class="guidance-status">
                 <v-icon class="status-icon">
                   {{ guidanceStatus === 'Cleared' ? 'mdi-check-circle' : 'mdi-alert-circle' }}
                 </v-icon>

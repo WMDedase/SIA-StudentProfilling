@@ -50,7 +50,7 @@
         <v-card-item>
           <v-card-title class="fw-bold" style="color: var(--dark);">
             <span class="material-icons"> playlist_add_check</span>
-            Clinic Requirements
+            Consultation History
           </v-card-title>
     
         </v-card-item>

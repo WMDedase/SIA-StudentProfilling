@@ -35,7 +35,7 @@ onMounted(async () => {
   >
   <template v-slot:top>
     <v-toolbar flat>
-      <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Consultation History</v-toolbar-title>
+      <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Consultations</v-toolbar-title>
       
     </v-toolbar>
     
@@ -51,10 +51,9 @@ export default {
     data () {
     return {
     headers: [
-      { title: 'Item Name', align: 'start', key: 'item_name' },
-      { title: 'Item Status', key: 'item_status' },
-      { title: 'Due Date', key: 'due' },
-      { title: 'Return Date', key: 'return_date' }
+      { title: 'Consultation Title', align: 'start', key: 'title' },
+      { title: 'Consultation Notes', key: 'notes' },
+      { title: 'Date', key: 'date' },
     ],
     borrowedItems: [],
 }

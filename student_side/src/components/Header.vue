@@ -62,7 +62,7 @@ onMounted(async () => {
     .sna-label{
         flex: 0.5;
         color: #e2e2e2;
-        align-self: flex-start;
+        align-self: center;
         margin-left: 0.5rem;
         font-size: 25px;
         @media (max-width: 1050px){

@@ -57,17 +57,6 @@ onMounted(async () => {
   }
 });
 
-const statusColor = computed(() => {
-  return guidanceStatus.value === 'Cleared' ? 'green' : '#dbc501';
-});
-
-const clinicStatusColor = computed(() => {
-  return clinicStatus.value === 'Cleared' ? 'green' : '#dbc501';
-});
-
-const libraryStatusColor = computed(() => {
-  return libraryStatus.value === 'Cleared' ? 'green' : '#dbc501';
-});
 </script>
 
 <template>
@@ -95,19 +84,19 @@ const libraryStatusColor = computed(() => {
             <tbody>
               <tr v-if="currentUser">
                 <td>Clinic</td>
-                <td :style="{ color: clinicStatusColor }">
+                <td :style="{ color: clinicStatus === 'Cleared' ? 'green' : '#dbc501' }">
                   {{ clinicStatus }}
                 </td>
               </tr>
               <tr v-if="currentUser">
                 <td>Guidance</td>
-                <td :style="{ color: statusColor }">
+                <td :style="{ color: guidanceStatus === 'Cleared' ? 'green' : '#dbc501' }">
                   {{ guidanceStatus }}
                 </td>
               </tr>
               <tr v-if="currentUser">
                 <td>Library</td>
-                <td :style="{ color: libraryStatusColor }">
+                <td :style="{ color:  libraryStatus === 'Cleared' ? 'green' : '#dbc501' }">
                   {{ libraryStatus }}
                 </td>
               </tr>
@@ -123,15 +112,15 @@ const libraryStatusColor = computed(() => {
                   <tbody>
                     <tr>
                       <td>PSA/Birth Certificate</td>
-                      <td class="pending-status">Pending</td>
+                      <td style="color: #FFA500;">Pending</td>
                     </tr>
                     <tr>
                       <td>Good Moral</td>
-                      <td class="pending-status">Pending</td>
+                      <td style="color: #FFA500;">Pending</td>
                     </tr>
                     <tr>
                       <td>Form-137/A</td>
-                      <td class="pending-status">Pending</td>
+                      <td style="color: #FFA500;" >Pending</td>
                     </tr>
                   </tbody>
                 </td>

@@ -71,7 +71,7 @@ export default {
 --dark:#2F3F64;
 --dark-alt: #334155;
 --light:#cdd1da;
---sidebar-width:250px;
+--sidebar-width:285px;
 --header-height: 80px
 
 }
@@ -80,7 +80,7 @@ export default {
 margin: 0;
 padding: 0;
 box-sizing: border-box;
-font-family: 'Sofia Sans';
+font-family: 'Inter';
 }
 
 body {
@@ -130,6 +130,7 @@ main {
 
         .vmg{
           border-left: 4px solid var(--dark-alt);
+
         }
 
         .profile{

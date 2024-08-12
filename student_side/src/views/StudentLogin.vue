@@ -34,7 +34,7 @@ import PolicyNotice from '../components/PolicyNotice.vue';
                         <!-- <h2 class="text-center lh-0 fs-4 fw-normal">
                         <span class="sna-text">St. Nicholas Academy School Management System</span>
                         </h2> -->
-                        <span class="sna-text"><h4 class="text-center pt-2 pb-3 fs-7 font-weight-black">
+                        <span class="sna-text"><h4 class="text-center pt-2 pb-3 fs-5 font-weight-black">
                           WELCOME STUDENTS!
                         </h4></span>
                       <v-form novalidate autocomplete="off">

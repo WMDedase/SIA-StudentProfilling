@@ -18,7 +18,7 @@ onMounted(async () => {
       consultations.value = response.student_profile.consultation;
       console.log('Consultation data:', consultations.value);
     } else {
-      error.value = 'No consultation data found or data is not an array';
+      error.value = 'No consultation data found';
     }
 
   } catch (err) {

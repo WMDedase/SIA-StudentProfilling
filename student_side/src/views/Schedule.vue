@@ -56,7 +56,7 @@ onMounted(async () => {
         <!-- toolbar -->
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64"></v-toolbar-title>
+            <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Class Schedule</v-toolbar-title>
             <!-- Add other toolbar elements here if needed -->
           </v-toolbar>
         </template>
@@ -129,7 +129,7 @@ main {
         .text{
             position: relative;
             color: var(--dark);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             bottom: 0.1rem;
             left: 0.2rem;   

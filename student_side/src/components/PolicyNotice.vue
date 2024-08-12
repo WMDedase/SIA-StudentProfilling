@@ -5,12 +5,13 @@
         scrollable
       >
         <template v-slot:activator="{ props: activatorProps }">
+          
           <v-btn
             color="#2F3F64"
             text="St. Nicholas Academy General Privacy Notice"
             variant="text"
             v-bind="activatorProps"
-            class="policy-btn"
+            style="font-weight: 800; font-size:12px "
           ></v-btn>
         </template>
   
@@ -111,11 +112,6 @@
 </script>
 
 <style lang="scss">
-.policy-btn{
-  font-weight: 900;
-  text-decoration: underline;
-
-}
 
 h2{
   color: var(--dark);

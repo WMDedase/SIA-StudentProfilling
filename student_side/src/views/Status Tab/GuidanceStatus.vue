@@ -39,7 +39,7 @@ onMounted(async () => {
     <div class="top-container">
       <h1 class="bg-title">GUIDANCE</h1>
       <div class="studentProfile">
-        <span class="material-icons">accessibility</span>
+        <span class="material-icons">chat</span>
         <span class="text fw-bolder">Guidance</span>
       </div>
     </div>
@@ -131,7 +131,7 @@ main {
       .text {
         position: relative;
         color: var(--dark);
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         font-weight: 900;
         bottom: 0.1rem;
         left: 0.2rem;

@@ -42,7 +42,7 @@ onMounted(async () => {
       // Wrap single object in array
       borrowedBooks.value = [borrowed];
     } else {
-      error.value = 'No borrowed books found or data is not an array';
+      error.value = 'No borrowed books found';
     }
 
     console.log('Borrowed books data:', borrowedBooks.value); // Log the borrowedBooks

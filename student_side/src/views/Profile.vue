@@ -164,7 +164,7 @@ main {
         .text{
             position: relative;
             color: var(--dark);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             bottom: 0.1rem;
             left: 0.2rem;   
@@ -260,20 +260,24 @@ main {
                   flex-direction: row;
                   flex: 0.5;
                   padding: 0.5rem;
-          
+                  gap: 1rem;
+
                   h5 {
                       color: var(--dark);
                       font-size: 20px;
                       text-align: center;
-                      text-shadow: 0 0 1px;
                       font-weight: 900;
+                      margin-bottom: 1.5rem;
                   }
                   .left{
                       flex: 0.5;
                       padding: 0.5rem;
                       border-radius: 5px;
-          
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.5rem;
                       margin: 0.2rem;
+                      
                       h7{
                           color: var(--dark);
                           text-shadow: 0 0 1px;
@@ -293,12 +297,14 @@ main {
                       padding: 0.5rem;
                       margin: 0.2rem;
                       border-radius: 5px;
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.5rem;
                       
                       h7{
                           color: var(--dark);
                           text-shadow: 0 0 1px;
                           font-size: 12px;
-                          text-align: center;
                       }
                       h6{
                           color: var(--dark);

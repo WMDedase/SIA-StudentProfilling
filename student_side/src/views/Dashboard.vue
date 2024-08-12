@@ -95,7 +95,7 @@ onMounted(async () => {
                 </td>
               </tr>
               <tr v-if="currentUser">
-                <td>Library</td>
+                <td cp>Library</td>
                 <td :style="{ color:  libraryStatus === 'Cleared' ? 'green' : '#dbc501' }">
                   {{ libraryStatus }}
                 </td>
@@ -167,8 +167,6 @@ onMounted(async () => {
   </main>
 </template>
 
-
-
 <script>
 import VMG from '../components/VMG.vue';
 
@@ -211,7 +209,7 @@ main {
     .text {
       position: relative;
       color: var(--dark);
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 900;
       bottom: 0.1rem;
       left: 0.2rem;
@@ -222,7 +220,7 @@ main {
 
 .bottom-container {
   display: flex;
-
+  gap: 0.5rem;
   .left-container {
     flex: 0.5;
     margin-right: 1rem;
@@ -258,7 +256,7 @@ main {
 
       th {
         color: var(--dark);
-        font-size: 20px;
+        font-size: 18px;
         text-align: center;
         text-shadow: 0 0 1px;
       }
@@ -322,6 +320,7 @@ main {
       td {
         color: var(--dark);
         padding: 0.6rem;
+        font-size: 16px;
       }
 
       .status {
@@ -334,8 +333,7 @@ main {
     flex: 0.5;
 
     .vmg {
-      margin-left: 1rem;
-      padding: 1rem;
+      padding: 1.5rem;
       border-radius: 5px;
       border-right: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
@@ -345,37 +343,20 @@ main {
         color: var(--dark);
         font-weight: 900;
         text-transform: uppercase;
-        text-shadow: 0 0 1px;
+        font-size:18px;
       }
 
       h5 {
         text-align: center;
         color: var(--dark);
         font-weight: 900;
+        margin: 1rem;
+        font-size:16px;
+
       }
     }
   }
 }
 
-@media (max-width: 1050px) {
-  .bottom-container {
-    flex-direction: column;
 
-    .left-container {
-      .top-left {
-        border-right: 4px solid var(--dark-alt);
-      }
-
-      .bottom-left {
-        border-right: 4px solid var(--dark-alt);
-      }
-    }
-
-    .right-container {
-      margin-top: 1.5rem;
-      border-left: 4px solid var(--dark-alt);
-    }
-  }
-
-}
 </style>

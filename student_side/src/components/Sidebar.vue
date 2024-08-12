@@ -68,8 +68,9 @@ watchEffect(() => {
         <div class="dropdown " @click="toggleDropdown" :class="{ 'open': isDropdownOpen }">
             <button class="dropbtn">
             <span class="material-icons">article</span>
-            <span class="text">Status Information</span>
-            
+            <span class="text" style="font-size:14px;">Status Information</span>
+            <span class="material-icons dropdown-icon">{{ isDropdownOpen ? 'expand_less' : 'expand_more' }}</span>
+
             </button>
             <transition name="fade">
             <div class="dropdown-content" v-if="isDropdownOpen" @click.stop>
@@ -244,6 +245,10 @@ export default {
 
             .dropbtn{
               margin-bottom: -1.2rem;
+
+              .dropdown-icon{
+                display: none;
+              }
                 .material-icons {
                         font-size: 2rem;
                         color: var(--light);
@@ -258,7 +263,6 @@ export default {
                 }
 
                 &:hover{
-                  margin-left: 0.3rem;
                   transition: 0.2s ease-out;
 
                 }
@@ -392,7 +396,10 @@ export default {
             transition: 0.2s ease-out;
             margin-bottom: 1.2rem;
             .dropbtn{
-                
+
+              .dropdown-icon{
+                display:inline;
+              }
                 .material-icons {
                     font-size: 2rem;
                     color: var(--light);

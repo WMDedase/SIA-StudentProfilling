@@ -65,12 +65,7 @@ onMounted(async () => {
         align-self: center;
         margin-left: 0.5rem;
         font-size: 25px;
-        @media (max-width: 1050px){
-          .sna-label{
-              font-size: 18px;
-          }
-        }
-  
+        margin-bottom: 1rem;
       }
     
     .profile{
@@ -78,11 +73,11 @@ onMounted(async () => {
         display: flex;
         justify-content: end;
         padding-right: 0.5rem;
-
+        
         .pic{
           box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
           width: 3.9rem;
-          margin: 1.5rem;
+          margin: 0.8rem;
           border-radius: 50%;
           background-color: white;
 
@@ -96,14 +91,19 @@ onMounted(async () => {
         }
 
         h5{
-            color: white;
-            align-self: center;
+          color: #e2e2e2;
+          align-self: center;
             font-size: 17px;
         }
         
     }
 
-
+    @media (max-width: 1050px){
+      .sna-label{
+          font-size: 18px;
+          align-self: center;
+      }
+    }
 }
 
 </style>

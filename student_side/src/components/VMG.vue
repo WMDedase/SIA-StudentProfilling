@@ -2,7 +2,7 @@
     <v-window v-model="activeSlide" show-arrows style="box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px; border-radius:5px" >
       <v-window-item v-for="(item, index) in items" :key="index" >
         <v-card class="pa-14 pt-5"  >
-          <h5 class="text-center" style="color:var(--dark); text-shadow: 0 0 1px;font-weight: 900;">{{ item.title }}</h5>
+          <h5 class="text-center" style="color:var(--dark); text-shadow: 0 0 1px;font-weight: 900; font-size:18px;">{{ item.title }}</h5>
           <v-card-text>
             <div v-for="(content, idx) in item.content" :key="idx">
               <p style="font-size:16px; ">{{ content }}</p>

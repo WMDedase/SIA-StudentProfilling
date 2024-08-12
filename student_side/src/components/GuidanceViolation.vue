@@ -26,7 +26,7 @@ onMounted(async () => {
       // Wrap single object in array
       studentGuidance.value = [guidance];
     } else {
-      error.value = 'No guidance found or data is not an array';
+      error.value = 'No guidance record found';
     }
 
     console.log('Student guidance data:', studentGuidance.value); // Log the studentGuidance

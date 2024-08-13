@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
 import VMG from '../components/VMG.vue';
 
@@ -10,6 +10,11 @@ const guidanceStatus = ref('Not Cleared');
 const clinicStatus = ref('Not Cleared');
 const libraryStatus = ref('Not Cleared');
 
+// Registrar requirements statuses
+const psaStatus = ref('Pending');
+const goodMoralStatus = ref('Pending');
+const torStatus = ref('Pending');
+
 onMounted(async () => {
   try {
     const response = await fetchCurrentUser();
@@ -17,6 +22,11 @@ onMounted(async () => {
 
     if (response.student_profile) {
       currentUser.value = response.student_profile;
+
+      // Set the statuses for PSA, Good Moral, and TOR
+      psaStatus.value = response.student_profile.psa || 'Pending';
+      goodMoralStatus.value = response.student_profile.goodmoral || 'Pending';
+      torStatus.value = response.student_profile.tor || 'Pending';
 
       // Guidance status logic
       if (!response.student_profile.guidance || response.student_profile.guidance.length === 0) {
@@ -56,7 +66,6 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-
 </script>
 
 <template>
@@ -95,7 +104,7 @@ onMounted(async () => {
                 </td>
               </tr>
               <tr v-if="currentUser">
-                <td cp>Library</td>
+                <td>Library</td>
                 <td :style="{ color:  libraryStatus === 'Cleared' ? 'green' : '#dbc501' }">
                   {{ libraryStatus }}
                 </td>
@@ -112,15 +121,21 @@ onMounted(async () => {
                   <tbody>
                     <tr>
                       <td>PSA/Birth Certificate</td>
-                      <td style="color: #FFA500;">Pending</td>
+                      <td :style="{ color: psaStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                        {{ psaStatus }}
+                      </td>
                     </tr>
                     <tr>
                       <td>Good Moral</td>
-                      <td style="color: #FFA500;">Pending</td>
+                      <td :style="{ color: goodMoralStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                        {{ goodMoralStatus }}
+                      </td>
                     </tr>
                     <tr>
                       <td>Form-137/A</td>
-                      <td style="color: #FFA500;" >Pending</td>
+                      <td :style="{ color: torStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                        {{ torStatus }}
+                      </td>
                     </tr>
                   </tbody>
                 </td>
@@ -176,7 +191,6 @@ export default {
   }
 };
 </script>
-
 <style lang="scss" scoped>
 main {
   display: flex;
@@ -264,37 +278,30 @@ main {
       td {
         color: var(--dark);
         font-weight: 600;
-        padding: 0.6rem;
+        padding: 0.6rem 0.3rem;
         text-align: center;
       }
 
       .requirements {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        font-size: 14px;
 
-        .table-head {
-          display: flex;
-          gap: 2.5rem;
-
-          th {
-            font-size: 18px;
-          }
+        table {
+          margin: 1rem auto;
         }
+      }
 
-        .status {
-          color: #dbc501;
-        }
+      .center-text {
+        text-align: center;
       }
     }
 
     .bottom-left {
       padding: 1rem;
+      margin-bottom: 2rem;
       color: var(--dark);
       border-radius: 5px;
       border-left: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-      font-size: 20px;
 
       h3 {
         text-shadow: 0 0 1px;
@@ -310,53 +317,55 @@ main {
         right: 2px;
       }
 
+      table {
+        width: 100%;
+      }
+
       th {
-        color: #5c5c5c;
-        font-size: 16px;
+        color: var(--dark);
+        font-size: 18px;
         text-align: center;
         text-shadow: 0 0 1px;
       }
 
       td {
         color: var(--dark);
-        padding: 0.6rem;
-        font-size: 16px;
-      }
-
-      .status {
-        color: #dbc501;
+        font-weight: 600;
+        padding: 0.6rem 0.3rem;
+        text-align: left;
       }
     }
   }
 
   .right-container {
     flex: 0.5;
+    margin-left: 1rem;
 
     .vmg {
-      padding: 1.5rem;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      color: var(--dark);
       border-radius: 5px;
-      border-right: 4px solid var(--dark-alt);
+      border-left: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
 
       h4 {
-        text-align: center;
-        color: var(--dark);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 24px;
         font-weight: 900;
-        text-transform: uppercase;
-        font-size:18px;
+        text-align: center;
+        text-shadow: 0 0 1px;
       }
 
       h5 {
-        text-align: center;
-        color: var(--dark);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
         font-weight: 900;
-        margin: 1rem;
-        font-size:16px;
-
+        text-align: center;
+        text-shadow: 0 0 1px;
       }
     }
   }
 }
-
-
 </style>
+

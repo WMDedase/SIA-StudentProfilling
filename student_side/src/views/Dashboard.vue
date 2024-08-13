@@ -284,9 +284,14 @@ main {
 
       .requirements {
         font-size: 14px;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-        table {
-          margin: 1rem auto;
+        .table-head{
+          display: flex;
+          gap: 1.7rem
         }
       }
 

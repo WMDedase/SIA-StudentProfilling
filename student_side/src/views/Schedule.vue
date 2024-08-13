@@ -141,6 +141,14 @@ main {
 .bottom-container{
     display: flex;
 
+    .v-data-table{
+      padding: 1rem;
+      margin-bottom: 2rem;
+      color: var(--dark);
+      border-radius: 5px;
+      border-left: 4px solid var(--dark-alt);
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+
     .v-table__wrapper{
         color: var(--dark);
         padding: 1.5rem;
@@ -150,6 +158,7 @@ main {
             font-weight: 800;
         }
     }
+  }
 }
 
 

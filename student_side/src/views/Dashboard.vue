@@ -351,7 +351,7 @@ main {
       margin-bottom: 2rem;
       color: var(--dark);
       border-radius: 5px;
-      border-left: 4px solid var(--dark-alt);
+      border-right: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
 
       h4 {

@@ -2,53 +2,36 @@
 import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
 
-// Reactive references
-const borrowedBooks = ref([]);
-const headers = ref([
-  { title: 'Item Name', value: 'book_title' },
-  { title: 'Item Status', value: 'borrow_status' },
-  { title: 'Due Date', value: 'return_duedate' },
-  { title: 'Return Date', value: 'return_date' }
-]);
+const currentUser = ref(null);
+const inventoryRecords = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-const getStatusText = (status) => {
-  const statusMap = {
-    0: 'Borrowed',
-    1: 'Overdue',
-    2: 'Returned',
-    3: 'Damaged',
-    4: 'Lost',
-    5: 'Damaged Payment',
-    6: 'Lost Payment',
-    7: 'Overdue Pay'
-  };
-  return statusMap[status] || 'Unknown Status';
-};
+const headersInventoryRecords = [
+  { title: 'Item Name', key: 'item_name' },
+  { title: 'Quantity', key: 'quantity' },
+  { title: 'Borrow Date', key: 'borrow_date' },
+  { title: 'Return Date', key: 'return_date' },
+];
 
 onMounted(async () => {
   try {
-    // Fetch current user data
     const response = await fetchCurrentUser();
-    console.log('API response:', response); // Log the entire response object
+    console.log('API response:', response);
 
-    // Extract and validate borrowed books
-    const borrowed = response.student_profile?.borrowed;
+    currentUser.value = response.student_profile;
 
-    if (Array.isArray(borrowed)) {
-      borrowedBooks.value = borrowed;
-    } else if (borrowed) {
-      // Wrap single object in array
-      borrowedBooks.value = [borrowed];
+    // Fetching inventory records
+    if (response.student_profile?.inventory && Array.isArray(response.student_profile.inventory)) {
+      inventoryRecords.value = response.student_profile.inventory;
+      console.log('Inventory record data:', inventoryRecords.value);
     } else {
-      error.value = 'No borrowed books found';
+      error.value = 'No inventory record data found';
     }
 
-    console.log('Borrowed books data:', borrowedBooks.value); // Log the borrowedBooks
   } catch (err) {
     error.value = 'Failed to fetch current user';
-    console.error('Error:', err); // Log any error that occurs
+    console.error('Error:', err);
   } finally {
     loading.value = false;
   }
@@ -56,30 +39,35 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="borrowedItems"
-    :loading="loading"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">
-          Borrowed Items
-        </v-toolbar-title>
-      </v-toolbar>
-    </template>
+  <main>
+    <!-- Inventory Records Table -->
+    <v-data-table
+      :headers="headersInventoryRecords"
+      :items="inventoryRecords"
+      :loading="loading"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Inventory Records</v-toolbar-title>
+        </v-toolbar>
+      </template>
 
-    <template v-slot:item="{ item }">
-      <tr :key="item.borrow_id">
-        <td>{{ item.book_title }}</td>
-        <td>{{ getStatusText(item.borrow_status) }}</td>
-        <td>{{ item.return_duedate }}</td>
-        <td>{{ item.return_date || 'N/A' }}</td>
-      </tr>
-    </template>
+      <template v-slot:item="{ item }">
+        <tr :key="item.id">
+          <td>{{ item.item_name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.borrow_date }}</td>
+          <td>{{ item.return_date }}</td>
+        </tr>
+      </template>
 
-    <template v-slot:no-data>
-      {{ error || 'No borrowed books found.' }}
-    </template>
-  </v-data-table>
+      <template v-slot:no-data>
+        {{ error || 'No inventory records found.' }}
+      </template>
+    </v-data-table>
+  </main>
 </template>
+
+<style scoped>
+/* Add any custom styles here */
+</style>

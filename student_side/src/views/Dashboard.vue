@@ -9,6 +9,7 @@ const error = ref(null);
 const guidanceStatus = ref('Not Cleared');
 const clinicStatus = ref('Not Cleared');
 const libraryStatus = ref('Not Cleared');
+const inventoryStatus = ref(null);  // Initialize without a default status
 
 // Registrar requirements statuses
 const psaStatus = ref('Pending');
@@ -49,12 +50,20 @@ onMounted(async () => {
         libraryStatus.value = 'Not Cleared';
       }
 
+      // Inventory status logic
+      if (response.student_profile.inventory && response.student_profile.inventory.length > 0) {
+        inventoryStatus.value = 'Not Cleared'; // Set status to 'Cleared' if there are inventory records
+      } else {
+        inventoryStatus.value = 'Cleared'; // Set status to 'Not Cleared' if no records are found
+      }
+
       console.log('Current user data:', currentUser.value);
     } else {
       error.value = 'No student data found';
       guidanceStatus.value = 'Cleared';
       clinicStatus.value = 'Not Cleared';
       libraryStatus.value = 'Not Cleared';
+      inventoryStatus.value = 'Not Cleared';
     }
   } catch (err) {
     error.value = 'Failed to fetch current user';
@@ -62,11 +71,13 @@ onMounted(async () => {
     guidanceStatus.value = 'Cleared';
     clinicStatus.value = 'Not Cleared';
     libraryStatus.value = 'Not Cleared';
+    inventoryStatus.value = 'Not Cleared';
   } finally {
     loading.value = false;
   }
 });
 </script>
+
 
 <template>
   <main>
@@ -121,35 +132,35 @@ onMounted(async () => {
                   <td style="color: green;">Cleared</td>
                 </template>
                 <template v-else>
-                <td class="requirements">
-                  <thead>
-                    <tr class="table-head">
-                      <th>Requirement</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>PSA/Birth Certificate</td>
-                      <td :style="{ color: psaStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                        {{ psaStatus }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Good Moral</td>
-                      <td :style="{ color: goodMoralStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                        {{ goodMoralStatus }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Form-137/A</td>
-                      <td :style="{ color: torStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                        {{ torStatus }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </td>
-              </template>
+                  <td class="requirements">
+                    <thead>
+                      <tr class="table-head">
+                        <th>Requirement</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>PSA/Birth Certificate</td>
+                        <td :style="{ color: psaStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                          {{ psaStatus }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Good Moral</td>
+                        <td :style="{ color: goodMoralStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                          {{ goodMoralStatus }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Form-137/A</td>
+                        <td :style="{ color: torStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                          {{ torStatus }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </td>
+                </template>
               </tr>
             </tbody>
           </table>
@@ -192,6 +203,7 @@ onMounted(async () => {
     </div>
   </main>
 </template>
+
 
 <script>
 import VMG from '../components/VMG.vue';

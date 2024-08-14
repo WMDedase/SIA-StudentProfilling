@@ -121,7 +121,9 @@ import Swal from 'sweetalert2';
       if (status === "Pending") {
         return "#FFA500"; // Set color to yellow if status is 'pending'
       } else if (status === "For Recieved") {
-        return "green"; // Set color to green if status is 'enrolled'
+        return "#6EACDA"; // Set color to green if status is 'For Recieved'
+      } else if (status === "Received") {
+        return "green"; // Set color to green if status is 'Received'
       } else {
         return "red"; // Default color
       }

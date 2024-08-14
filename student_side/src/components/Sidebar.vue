@@ -77,6 +77,7 @@ watchEffect(() => {
                 <!-- Five tabs in the dropdown -->
                 <router-link to="/clinic"><span class="material-icons">medical_services</span><span class="text">Clinic</span></router-link>
                 <router-link to="/guidance"><span class="material-icons">accessibility</span><span class="text">Guidance</span></router-link>
+                <router-link to="/inventory"><span class="material-icons">inventory</span><span class="text">Inventory</span></router-link>
                 <router-link to="/library"><span class="material-icons">book</span><span class="text">Library</span></router-link>
             </div>
             </transition>
@@ -395,6 +396,7 @@ export default {
             padding: 0.8rem 1rem;
             transition: 0.2s ease-out;
             margin-bottom: 1.2rem;
+            
             .dropbtn{
 
               .dropdown-icon{

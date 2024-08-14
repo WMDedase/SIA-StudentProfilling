@@ -104,6 +104,12 @@ onMounted(async () => {
                 </td>
               </tr>
               <tr v-if="currentUser">
+                <td>Inventory</td>
+                <td :style="{ color: inventoryStatus === 'Cleared' ? 'green' : '#dbc501' }">
+                  {{ inventoryStatus }}
+                </td>
+              </tr>
+              <tr v-if="currentUser">
                 <td>Library</td>
                 <td :style="{ color:  libraryStatus === 'Cleared' ? 'green' : '#dbc501' }">
                   {{ libraryStatus }}
@@ -111,6 +117,10 @@ onMounted(async () => {
               </tr>
               <tr>
                 <td>Registrar</td>
+                <template v-if="psaStatus === 'Cleared' && goodMoralStatus === 'Cleared' && torStatus === 'Cleared'">
+                  <td style="color: green;">Cleared</td>
+                </template>
+                <template v-else>
                 <td class="requirements">
                   <thead>
                     <tr class="table-head">
@@ -139,6 +149,7 @@ onMounted(async () => {
                     </tr>
                   </tbody>
                 </td>
+              </template>
               </tr>
             </tbody>
           </table>

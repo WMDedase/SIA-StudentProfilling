@@ -37,6 +37,13 @@ const router = createRouter({
         },
     },
     {
+      path: '/inventory',
+      component: () => import('../views/Status Tab/InventoryStatus.vue'),
+      meta: {
+        requiresAuthentication: true, 
+      },
+    },
+    {
         path: '/library',
         component: () => import('../views/Status Tab/LibraryStatus.vue'),
         meta: {

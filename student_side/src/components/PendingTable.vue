@@ -68,7 +68,11 @@ onMounted(async () => {
       <template v-slot:item= '{ item }'>
         <tr :key="item.id">
           <td style="padding:1rem;">{{ item.document_type}}</td>
-          <td>{{ item.document_remarks	}}</td>
+          <td :style="{ color: getStatusColor(item.document_remarks) }"><v-chip>
+            {{
+              item.document_remarks
+            }}
+          </v-chip></td>
           <td>{{ item.document_release_date	}}</td>
         </tr>
       </template>
@@ -87,7 +91,7 @@ import Swal from 'sweetalert2';
         documentlist: [],
         headers: [
           { title: 'Document Type', key: 'document_type' },
-          { title: 'Status', key: 'status' },
+          { title: 'Status', key: 'status', },
           { title: 'Release Date', key: 'document_release_date' },
         ],     
         documentData: {
@@ -113,6 +117,15 @@ import Swal from 'sweetalert2';
       console.error('Error fetching items:', error);
     }
   },
+  getStatusColor(status) {
+      if (status === "Pending") {
+        return "#FFA500"; // Set color to yellow if status is 'pending'
+      } else if (status === "For Recieved") {
+        return "green"; // Set color to green if status is 'enrolled'
+      } else {
+        return "red"; // Default color
+      }
+    },
   },
   }
   
@@ -122,7 +135,6 @@ import Swal from 'sweetalert2';
   
   <style lang="scss">
   .v-data-table {
-
   .v-table__wrapper{
     color: var(--dark);
     padding: 1.5rem;
@@ -130,7 +142,7 @@ import Swal from 'sweetalert2';
     .v-data-table__th {
       font-size: 17px;
       font-weight: 800;
-  
+      padding-left: 1.8rem;
     }
   
   }

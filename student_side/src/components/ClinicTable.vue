@@ -3,9 +3,16 @@ import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
 
 const currentUser = ref(null);
-const consultations = ref([]);
+const consultationRecords = ref([]);
 const loading = ref(true);
 const error = ref(null);
+
+const headersConsultationRecords = [
+  { title: 'Complaint', key: 'complaint' },
+  { title: 'Treatment', key: 'treatment' },
+  { title: 'Time In', key: 'time_in' },
+  { title: 'Time Out', key: 'time_out' },
+];
 
 onMounted(async () => {
   try {
@@ -14,11 +21,12 @@ onMounted(async () => {
 
     currentUser.value = response.student_profile;
 
-    if (response.student_profile?.consultation && Array.isArray(response.student_profile.consultation)) {
-      consultations.value = response.student_profile.consultation;
-      console.log('Consultation data:', consultations.value);
+    // Fetching consultation records
+    if (response.student_profile?.consultation_record && Array.isArray(response.student_profile.consultation_record)) {
+      consultationRecords.value = response.student_profile.consultation_record;
+      console.log('Consultation record data:', consultationRecords.value);
     } else {
-      error.value = 'No consultation data found';
+      error.value = 'No consultation record data found';
     }
 
   } catch (err) {
@@ -31,44 +39,34 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="consultations"
-    :loading="loading"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Consultations</v-toolbar-title>
-      </v-toolbar>
-    </template>
+  <main>
+    <!-- Consultation Records Table -->
+    <v-data-table
+      :headers="headersConsultationRecords"
+      :items="consultationRecords"
+      :loading="loading"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Consultation Records</v-toolbar-title>
+        </v-toolbar>
+      </template>
 
-    <template v-slot:item="{ item }">
-      <tr :key="item.con_id">
-        <td>{{ item.con_title }}</td>
-        <td>{{ item.con_notes }}</td>
-        <td>{{ item.con_date }}</td>
-      </tr>
-    </template>
+      <template v-slot:item="{ item }">
+        <tr :key="item.id">
+          <td>{{ item.complaint }}</td>
+          <td>{{ item.treatment }}</td>
+          <td>{{ item.time_in }}</td>
+          <td>{{ item.time_out }}</td>
+        </tr>
+      </template>
 
-    <template v-slot:no-data>
-      {{ error || 'No consultations found.' }}
-    </template>
-  </v-data-table>
+      <template v-slot:no-data>
+        {{ error || 'No consultation records found.' }}
+      </template>
+    </v-data-table>
+  </main>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      headers: [
-        { title: 'Consultation Title', key: 'con_title' },
-        { title: 'Consultation Notes', key: 'con_notes' },
-        { title: 'Date', key: 'con_date' },
-      ],
-    };
-  },
-};
-</script>
 
 <style scoped>
 /* Add any custom styles here */

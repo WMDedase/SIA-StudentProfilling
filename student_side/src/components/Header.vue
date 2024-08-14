@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
+import defaultProfilePic from '../assets/SNA Logo with BG.png'; // Import default profile picture
 
 const currentUser = ref(null);
 const loading = ref(true);
 const error = ref(null);
+const profilePicUrl = ref(defaultProfilePic); // Default profile picture
 
 onMounted(async () => {
   try {
@@ -35,8 +37,9 @@ onMounted(async () => {
         <div class="profile" v-if="currentUser">
 
           <h5> {{ currentUser.first_name}} {{ currentUser.middle_name}} {{ currentUser.last_name}}</h5>
-                    <div class="pic">
-            <img src="../assets/student.svg" alt="">
+          
+          <div class="pic">
+            <img :src="profilePicUrl" alt="Profile Picture">
           </div>
         </div>
     </header>

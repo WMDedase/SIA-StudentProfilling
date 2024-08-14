@@ -7,9 +7,6 @@ const currentUser = ref(null);
 const schedule = ref([]);
 const loading = ref(true);
 const error = ref(null);
-const showCalendarDialog = ref(false);
-
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 onMounted(async () => {
   try {
@@ -35,13 +32,8 @@ onMounted(async () => {
     loading.value = false;
   }
 
-
 });
 
-  // Function to get schedule for a specific day
-  function getScheduleForDay(day) {
-  return schedule.value.filter(item => item.day === day);
-}
 
 </script>
 
@@ -68,9 +60,6 @@ onMounted(async () => {
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64">Class Schedule</v-toolbar-title>
-            <v-btn @click="showCalendarDialog = true" color="primary">
-              Weekly Schedule
-            </v-btn>
           </v-toolbar>
         </template>
 
@@ -91,33 +80,7 @@ onMounted(async () => {
 
       </v-data-table>
 
-    </div>
-
-          <!-- Calendar Dialog -->
-          <v-dialog v-model="showCalendarDialog" max-width="800px">
-            <v-card>
-              <v-card-title>
-                <span class="text-h5">Weekly Schedule</span>
-              </v-card-title>
-              <v-card-text>
-                <div class="calendar-view">
-                  <div class="calendar-header">
-                    <div v-for="day in daysOfWeek" :key="day" class="calendar-day" >
-                      <h3>{{ day }}</h3>
-                      <div v-for="item in getScheduleForDay(day)" :key="item.classcode" class="calendar-item">
-                        <p><strong>{{ item.classcode }}</strong></p>
-                        <p>{{ item.class_desc }}</p>
-                        <p>{{ item.time }}</p>
-                        <p>{{ item.faculty.fname }} {{ item.faculty.lname }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </v-card-text>
-              <v-spacer></v-spacer>
-            </v-card>
-          </v-dialog>
-    
+    </div>    
   </main>
 </template>
 
@@ -203,38 +166,5 @@ main {
 
 
 }
-
-.calendar-view {
-  display: flex;
-  flex-direction: column;
-
-  .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    .calendar-day {
-      padding: 1rem;
-      box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
-      margin: 0.2rem;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      border-top: 4px solid var(--dark);
-      
-      h3 {
-        font-size: 18px;
-        margin: 0;
-        text-align: center;
-      }
-
-      .calendar-item {
-        padding: 0.5rem;
-        border-top: 1px solid #ddd;
-        font-size: 0.9rem;
-      }
-    }
-  }
-}
-
 
 </style>

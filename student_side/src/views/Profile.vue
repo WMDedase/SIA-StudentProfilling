@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
+import defaultProfilePic from '../assets/SNA Logo with BG.png'; // Import default profile picture
 
 const currentUser = ref(null);
 const loading = ref(true);
 const error = ref(null);
+const showUploadDialog = ref(false);
+const profilePicUrl = ref(defaultProfilePic); // Default profile picture
 
 onMounted(async () => {
   try {
@@ -26,6 +29,26 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+// Function to handle file input change
+function handleFileChange(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      profilePicUrl.value = reader.result; // Set image URL
+      // Optionally: upload the image to the server here
+
+    };
+    reader.readAsDataURL(file);
+    showUploadDialog.value = false; // Close the dialog after uploading
+  }
+}
+
+// Function to open the upload dialog
+function openUploadDialog() {
+  showUploadDialog.value = true;
+}
 </script>
 
 <template>
@@ -65,9 +88,10 @@ onMounted(async () => {
                   </div>
                 </div>
                     
-                <div class="profile-pic">
-                    <img src="../assets/student.svg" alt="" >
+                <div class="profile-pic" @click="openUploadDialog">
+                  <img :src="profilePicUrl" alt="Profile Picture">
                 </div>
+
                     <div v-if="loading"></div>
                     <div v-if="error"></div>
                     <div v-if="currentUser" class="content">
@@ -120,6 +144,22 @@ onMounted(async () => {
           </div>
         </div>
     </div>
+
+
+
+        <!-- Upload Picture Dialog -->
+        <v-dialog v-model="showUploadDialog" max-width="400px">
+          <v-card>
+            <v-card-title class="fw-bold" style="padding:1.2rem;background-color: var(--dark); color:white; border-radius:3px;"><span class="material-icons" style="position:relative; right:5px; top:5px;">upload</span>Upload Profile Picture</v-card-title>
+              <v-card-text>
+                  <v-file-input @change="handleFileChange" accept="image/*" label="Choose an image" />
+              </v-card-text>
+              <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn @click="showUploadDialog = false">Cancel</v-btn>
+              </v-card-actions>
+          </v-card>
+      </v-dialog>
 </main>
 </template>
 
@@ -245,7 +285,8 @@ main {
                 align-self: center;
                 margin: 1.5rem;
                 border-radius: 5px;
-                
+                cursor: pointer;
+
                   img{
                       width: 100%;
                       height: 100%;

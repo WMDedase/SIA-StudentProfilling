@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2';
 import { fetchCurrentUser, uploadProfilePicture } from '../services/api';
 import defaultProfilePic from '../assets/SNA Logo with BG.png'; // Import default profile picture
 
@@ -9,6 +9,7 @@ const loading = ref(true);
 const error = ref(null);
 const showUploadDialog = ref(false);
 const profilePicUrl = ref(defaultProfilePic); // Default profile picture
+const canUpload = ref(true); // Ref to control upload ability
 
 // Fetch user data on mount
 onMounted(async () => {
@@ -17,16 +18,19 @@ onMounted(async () => {
     console.log('API response:', response);
 
     currentUser.value = response.student_profile;
-    if (response.student_profile && response.student_profile.length > 0) {
+    if (response.student_profile) {
       console.log('Current user data:', currentUser.value);
 
-      // Update the profilePicUrl if profile pictures are available
-      const profilePics = response.student_profile.profile_pic?.image || [];
-      if (profilePics.length > 0) {
-        profilePicUrl.value = profilePics[0]; // Use the first profile picture
+      if (response.student_profile.profile_pic && response.student_profile.profile_pic.image) {
+        const imageFilename = response.student_profile.profile_pic.image;
+        console.log('Received image data:', imageFilename);
+
+        // Construct the full URL to the image
+        profilePicUrl.value = `http://26.81.173.255:8000/uploads/profile/${imageFilename}`;
+        canUpload.value = false; // Disable upload if profile picture already exists
       }
     } else {
-      error.value = '.';
+      error.value = 'No profile picture found, using default.';
     }
   } catch (err) {
     error.value = 'Failed to fetch current user';
@@ -38,39 +42,46 @@ onMounted(async () => {
 
 // Handle file input change
 async function handleFileChange(event) {
-  const file = event.target.files[0];
-  if (file && currentUser.value) {
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      // Update profilePicUrl with the file URL
-      profilePicUrl.value = reader.result;
+  if (!canUpload.value) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Oops...',
+      text: 'You have already uploaded a profile picture!',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#3085d6',
+      background: '#f4f4f4',
+    });
+  } else {
+    const file = event.target.files[0];
+    if (file && currentUser.value) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        profilePicUrl.value = reader.result;
 
-      // Prepare form data
-      const formData = new FormData();
-      formData.append('image', file);
-      formData.append('student_id', currentUser.value.student_id);
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('student_id', currentUser.value.student_id);
 
-      try {
-        // Upload the profile picture
-        await uploadProfilePicture(formData);
-        console.log('Profile picture uploaded successfully');
+        try {
+          await uploadProfilePicture(formData);
+          console.log('Profile picture uploaded successfully');
 
-        // Show success alert
-        Swal.fire({
-          title: 'Success!',
-          text: 'Profile picture uploaded successfully!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
+          Swal.fire({
+            title: 'Success!',
+            text: 'Profile picture uploaded successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
 
-        // Fetch the updated user data to reflect changes
-        await onMounted();
-      } catch (err) {
-        console.error('Failed to upload profile picture', err);
-      }
-    };
-    reader.readAsDataURL(file);
-    showUploadDialog.value = false; // Close the dialog after uploading
+          canUpload.value = false; // Disable further uploads
+          await onMounted(); // Fetch updated user data
+        } catch (err) {
+          console.error('Failed to upload profile picture', err);
+        }
+      };
+      reader.readAsDataURL(file);
+      showUploadDialog.value = false;
+    }
   }
 }
 
@@ -170,199 +181,192 @@ function openUploadDialog() {
 <script>
 import DocxRequestForm from '../components/DocxRequestForm.vue';
 import PendingTable from '../components/PendingTable.vue';
+
 export default {
-    components: {
-      DocxRequestForm,
-      PendingTable
-    },
+  components: {
+    DocxRequestForm,
+    PendingTable
+  }
 }
 </script>
 
 <style lang="scss">
 main {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-container{
-    display: flex;
-    margin: 0.5rem;
+  display: flex;
+  margin: 0.5rem;
 
-    .bg-title{
-        z-index: -1;
-        position: absolute;
-        opacity: 6%;
-        margin-top: -40px;
-        font-size: 100px;
-        font-family: Impact, fantasy;
+  .bg-title{
+    z-index: -1;
+    position: absolute;
+    opacity: 6%;
+    margin-top: -40px;
+    font-size: 100px;
+    font-family: Impact, fantasy;
+  }
+  .studentProfile{
+    flex: 1;
+
+    .material-icons{
+      position: relative;
+      color: var(--dark);
+      font-size: 2rem;
+      top: 4px;
     }
-    .studentProfile{
-        flex: 1;
-
-        .material-icons{
-            position: relative;
-            color: var(--dark);
-            font-size: 2rem;
-            top: 4px;
-        }
-        .text{
-            position: relative;
-            color: var(--dark);
-            font-size: 2.2rem;
-            font-weight: 900;
-            bottom: 0.1rem;
-            left: 0.2rem;   
-            text-shadow: 0 1px 1px;
-
-        }
+    .text{
+      position: relative;
+      color: var(--dark);
+      font-size: 2.2rem;
+      font-weight: 900;
+      bottom: 0.1rem;
+      left: 0.2rem;
+      text-shadow: 0 1px 1px;
     }
-
+  }
 } 
 
 .bottom-container{
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 
-    .left-container{
-        flex: 0.5;
-        color: var(--dark);
-        border-radius: 5px;
-        margin-bottom: 0.2rem;
+  .left-container{
+    flex: 0.5;
+    color: var(--dark);
+    border-radius: 5px;
+    margin-bottom: 0.2rem;
 
-        .pending-table{
-            margin-bottom: 0.2rem;
-            padding: 0.5rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--dark-alt);
-            box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+    .pending-table{
+      margin-bottom: 0.2rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border-left: 4px solid var(--dark-alt);
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
 
-            h3 {
-                text-shadow: 0 0 1px;
-                font-size: 20px;
-                flex: 1;
-                margin-bottom: 1rem;
-                  .material-icons{
-                    position:relative;
-                    font-size: 35px;
-                    top: 10px;
-                }
-              }
-
+      h3 {
+        text-shadow: 0 0 1px;
+        font-size: 20px;
+        flex: 1;
+        margin-bottom: 1rem;
+        .material-icons{
+          position:relative;
+          font-size: 35px;
+          top: 10px;
         }
-
+      }
     }
+  }
 
-    .right-container{
+  .right-container{
+    flex: 0.5;
+
+    .profile{
+      color: var(--dark);
+      margin-bottom: 0.2rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border-right: 4px solid var(--dark-alt);
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+      display: flex;
+      flex-direction: column;
+
+      .profile_header{
+        display: flex;
+        h3 {
+          text-shadow: 0 0 1px;
+          font-size: 20px;
+          flex: 1;
+        }
+        .material-icons{
+          position:relative;
+          font-size: 35px;
+          top: 10px;
+        }
+        .request-btn{
+          margin-top: 0.5rem;
+        }
+      }
+
+      .profile-pic{
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+        width: 35%;
+        align-self: center;
+        margin: 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 3px;
+        }
+      }
+
+      .content{
+        display: flex;
+        flex-direction: row;
         flex: 0.5;
+        padding: 0.5rem;
+        gap: 1rem;
 
-        .profile{
+        h5 {
+          color: var(--dark);
+          font-size: 20px;
+          text-align: center;
+          font-weight: 900;
+          margin-bottom: 1.5rem;
+        }
+        .left{
+          flex: 0.5;
+          padding: 0.5rem;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          margin: 0.2rem;
+
+          h7{
             color: var(--dark);
-            margin-bottom: 0.2rem;
-            padding: 0.5rem;
-            border-radius: 10px;
-            border-right: 4px solid var(--dark-alt);
-            box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-            display: flex;
-            flex-direction: column;
-            
-            .profile_header{
-              display: flex;
-                h3 {
-                  text-shadow: 0 0 1px;
-                  font-size: 20px;
-                    flex: 1;
-                }
-                .material-icons{
-                    position:relative;
-                    font-size: 35px;
-                    top: 10px;
-                }
-                  .request-btn{
-                    margin-top: 0.5rem;
-                  }
-                }
-                
-              .profile-pic{
-                box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-                width: 35%;   
-                align-self: center;
-                margin: 1.5rem;
-                border-radius: 5px;
-                cursor: pointer;
+            text-shadow: 0 0 1px;
+            font-size: 12px;
+          }
+          h6{
+            color: var(--dark);
+            font-weight: 900;
+            border-bottom: 1px solid #dbdbdb;
+            text-align: center;
+            padding: 0.2rem;
+          }
+        }
+        .right{
+          flex: 0.6;
+          padding: 0.5rem;
+          margin: 0.2rem;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
 
-                  img{
-                      width: 100%;
-                      height: 100%;
-                      object-fit: cover;
-                      border-radius: 3px;
-
-                  }
-              }
-
-              .content{
-                  display: flex;
-                  flex-direction: row;
-                  flex: 0.5;
-                  padding: 0.5rem;
-                  gap: 1rem;
-
-                  h5 {
-                      color: var(--dark);
-                      font-size: 20px;
-                      text-align: center;
-                      font-weight: 900;
-                      margin-bottom: 1.5rem;
-                  }
-                  .left{
-                      flex: 0.5;
-                      padding: 0.5rem;
-                      border-radius: 5px;
-                      display: flex;
-                      flex-direction: column;
-                      gap: 0.5rem;
-                      margin: 0.2rem;
-                      
-                      h7{
-                          color: var(--dark);
-                          text-shadow: 0 0 1px;
-                          font-size: 12px;
-                      }
-                      h6{
-                          color: var(--dark);
-                          font-weight: 900;
-                          border-bottom: 1px solid #dbdbdb;
-                          text-align: center;
-                          padding: 0.2rem;
-                      }
-          
-                  }
-                  .right{
-                      flex: 0.6;
-                      padding: 0.5rem;
-                      margin: 0.2rem;
-                      border-radius: 5px;
-                      display: flex;
-                      flex-direction: column;
-                      gap: 0.5rem;
-                      
-                      h7{
-                          color: var(--dark);
-                          text-shadow: 0 0 1px;
-                          font-size: 12px;
-                      }
-                      h6{
-                          color: var(--dark);
-                          font-weight: 900;
-                          text-align: center;
-                          border-bottom: 1px solid #dbdbdb;
-                          padding: 0.2rem;
-          
-                      }
-                  }
-              }
-       
-}
+          h7{
+            color: var(--dark);
+            text-shadow: 0 0 1px;
+            font-size: 12px;
+          }
+          h6{
+            color: var(--dark);
+            font-weight: 900;
+            text-align: center;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 0.2rem;
+          }
+        }
+      }
     }
+  }
 }
 </style>

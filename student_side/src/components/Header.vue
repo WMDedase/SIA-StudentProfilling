@@ -14,17 +14,21 @@ onMounted(async () => {
     console.log('API response:', response); // Log the entire response object
 
     currentUser.value = response.student_profile;
-    if (response.student_profile && response.student_profile.profile_pic && response.student_profile.profile_pic.image) {
-      console.log('Current user data:', currentUser.value); // Log the current user data
 
-      // Set the profilePicUrl from the API response
-      profilePicUrl.value = `http://26.81.173.255:8000/uploads/profile/${response.student_profile.profile_pic.image}`;
+    if (response.student_profile && response.student_profile.profile_pic && response.student_profile.profile_pic.image) {
+      const imageFilename = response.student_profile.profile_pic.image;
+      console.log('Received image data:', imageFilename);
+
+      // Construct the full URL to the image
+      profilePicUrl.value = `http://26.81.173.255:8000/uploads/profile/${imageFilename}`;
     } else {
-      error.value = 'No profile picture found';
+      error.value = 'No profile picture found, using default.';
+      profilePicUrl.value = defaultProfilePic;
     }
   } catch (err) {
     error.value = 'Failed to fetch current user';
     console.error('Error:', err); // Log any error that occurs
+    profilePicUrl.value = defaultProfilePic; // Ensure the default image is used in case of error
   } finally {
     loading.value = false;
   }
@@ -39,7 +43,7 @@ onMounted(async () => {
       <h5>{{ currentUser.first_name }} {{ currentUser.middle_name }} {{ currentUser.last_name }}</h5>
 
       <div class="pic">
-        <img :src="profilePicUrl" alt="Profile Picture" />
+        <img :src="profilePicUrl" alt="Profile Picture" @error="profilePicUrl = defaultProfilePic" />
       </div>
     </div>
   </header>
@@ -74,15 +78,15 @@ onMounted(async () => {
 
     .pic {
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-      width: 4rem; /* Increase size if needed */
-      height: 4rem; /* Ensure height matches width */
+      width: 4rem;
+      height: 4rem;
       margin: 0.8rem;
       border-radius: 50%;
       background-color: white;
-      overflow: hidden; /* Ensure image doesn't overflow container */
+      overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: center; /* Center the image inside the container */
+      justify-content: center;
 
       img {
         width: 100%;

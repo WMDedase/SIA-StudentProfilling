@@ -6,7 +6,6 @@ const documentlist = ref([]);
 const headers = ref([
     { title: 'Document Type', key: 'document_type' },
     { title: 'Status', key: 'document_remarks' },
-    { title: 'Release Date', key: 'document_release_date' },
 ]);
 const loading = ref(true);
 const error = ref(null);

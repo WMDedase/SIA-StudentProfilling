@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchCurrentUser } from '../services/api';
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import { fetchCurrentUser, uploadProfilePicture } from '../services/api';
 import defaultProfilePic from '../assets/SNA Logo with BG.png'; // Import default profile picture
 
 const currentUser = ref(null);
@@ -9,158 +10,161 @@ const error = ref(null);
 const showUploadDialog = ref(false);
 const profilePicUrl = ref(defaultProfilePic); // Default profile picture
 
+// Fetch user data on mount
 onMounted(async () => {
   try {
     const response = await fetchCurrentUser();
-    console.log('API response:', response); // Log the entire response object
+    console.log('API response:', response);
 
-    console.log(response.student_profile);
     currentUser.value = response.student_profile;
     if (response.student_profile && response.student_profile.length > 0) {
-    //   currentUser.value = response.student[0];
-      console.log('Current user data:', currentUser.value); // Log the current user data
+      console.log('Current user data:', currentUser.value);
+
+      // Update the profilePicUrl if profile pictures are available
+      const profilePics = response.student_profile.profile_pic?.image || [];
+      if (profilePics.length > 0) {
+        profilePicUrl.value = profilePics[0]; // Use the first profile picture
+      }
     } else {
-      error.value = 'No student data found';
+      error.value = '.';
     }
   } catch (err) {
     error.value = 'Failed to fetch current user';
-    console.error('Error:', err); // Log any error that occurs
+    console.error('Error:', err);
   } finally {
     loading.value = false;
   }
 });
 
-// Function to handle file input change
-function handleFileChange(event) {
+// Handle file input change
+async function handleFileChange(event) {
   const file = event.target.files[0];
-  if (file) {
+  if (file && currentUser.value) {
     const reader = new FileReader();
-    reader.onloadend = () => {
-      profilePicUrl.value = reader.result; // Set image URL
-      // Optionally: upload the image to the server here
+    reader.onloadend = async () => {
+      // Update profilePicUrl with the file URL
+      profilePicUrl.value = reader.result;
 
+      // Prepare form data
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('student_id', currentUser.value.student_id);
+
+      try {
+        // Upload the profile picture
+        await uploadProfilePicture(formData);
+        console.log('Profile picture uploaded successfully');
+
+        // Show success alert
+        Swal.fire({
+          title: 'Success!',
+          text: 'Profile picture uploaded successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+
+        // Fetch the updated user data to reflect changes
+        await onMounted();
+      } catch (err) {
+        console.error('Failed to upload profile picture', err);
+      }
     };
     reader.readAsDataURL(file);
     showUploadDialog.value = false; // Close the dialog after uploading
   }
 }
 
-// Function to open the upload dialog
+// Open upload dialog
 function openUploadDialog() {
   showUploadDialog.value = true;
 }
 </script>
 
 <template>
-<main>
+  <main>
     <div class="top-container">
-        <h1 class="bg-title">PROFILE</h1>
-        <div class="studentProfile">
-            <span class="material-icons">person</span>
-            <span class="text fw-bolder">Profile</span>   
-        </div>    
-    </div> 
+      <h1 class="bg-title">PROFILE</h1>
+      <div class="studentProfile">
+        <span class="material-icons">person</span>
+        <span class="text fw-bolder">Profile</span>
+      </div>
+    </div>
     <hr>
 
     <div class="bottom-container">
-
-        <div class="left-container">
-            <div class="pending-table">
-                <h3><span class="material-icons"> pending_actions</span>Pending Documents</h3>
-
-                
-                <PendingTable/>
-
-            </div>
-            
-
+      <div class="left-container">
+        <div class="pending-table">
+          <h3><span class="material-icons"> pending_actions</span>Pending Documents</h3>
+          <PendingTable/>
         </div>
+      </div>
 
-        <div class="right-container">
+      <div class="right-container">
+        <div class="profile">
+          <div class="profile_header">
+            <h3><span class="material-icons"> account_circle</span>Profile</h3>
+            <div class="request-btn">
+              <DocxRequestForm/>
+            </div>
+          </div>
 
-            <div class="profile">
+          <div class="profile-pic" @click="openUploadDialog">
+            <img :src="profilePicUrl" alt="Profile Picture">
+          </div>
 
-                <div class="profile_header">
-                  <h3><span class="material-icons"> account_circle</span>Profile</h3>
-  
-                  <div class="request-btn">
-                    <DocxRequestForm/>
-                  </div>
-                </div>
-                    
-                <div class="profile-pic" @click="openUploadDialog">
-                  <img :src="profilePicUrl" alt="Profile Picture">
-                </div>
+          <div v-if="loading">Loading...</div>
+          <div v-if="error">{{ error }}</div>
+          <div v-if="currentUser" class="content">
+            <div class="left">
+              <h5>School Information</h5>
+              <h7>Student ID:</h7>
+              <h6>{{ currentUser.student_id }}</h6>
+              <h7>LRN:</h7>
+              <h6>{{ currentUser.student_lrn }}</h6>
+              <h7>Grade Level:</h7>
+              <h6>{{ currentUser.grade_level }}</h6>
+              <h7 v-if="currentUser.grade_level > 10">Strand:</h7>
+              <h6 v-if="currentUser.grade_level > 10">{{ currentUser.strand }}</h6>
+              <h7>Section:</h7>
+              <h6>{{ currentUser.section }}</h6>
+              <h7>Adviser:</h7>
+              <h6>{{ currentUser.adviser.fname + ' ' + currentUser.adviser.lname }}</h6>
+              <h7>Enrollment Status:</h7>
+              <h6 style="color: green; font-weight: 900;">{{ currentUser.enrollment_status }}</h6>
+            </div>
 
-                    <div v-if="loading"></div>
-                    <div v-if="error"></div>
-                    <div v-if="currentUser" class="content">
-                        <div class="left">
-      
-                          <h5>School Information</h5>
-                          
-                          <h7>Student ID:</h7>
-                          <h6 >{{ currentUser.student_id }}</h6>
-      
-                          <h7>LRN:</h7>
-                          <h6 >{{ currentUser.student_lrn }}</h6>
-                          
-                          <h7 >Grade Level:</h7>
-                          <h6 >{{ currentUser.grade_level }}</h6>
-      
-                          <h7 v-if="currentUser.grade_level > 10">Strand:</h7>
-                          <h6 v-if="currentUser.grade_level > 10">{{ currentUser.strand }}</h6>
-      
-                          <h7>Section:</h7>
-                          <h6>{{ currentUser.section }}</h6>
-      
-                          <h7>Adviser:</h7>
-                          <h6 >{{ currentUser.adviser.fname  + ' ' + currentUser.adviser.lname}}</h6>
-      
-                          <h7>Enrollment Status:</h7>
-                          <h6 style="color: green; font-weight:900;" >{{ currentUser.enrollment_status}}</h6>
-                      </div>
-      
-                      <div class="right">
-                          <h5>Personal Information</h5>
-      
-                          <h7>Name:</h7>
-                          <h6 >{{ currentUser.first_name}} {{ currentUser.middle_name}} {{ currentUser.last_name}}</h6>
-      
-                          <h7>Gender:</h7>
-                          <h6 >{{ currentUser.sex_at_birth}}</h6>
-      
-                          <h7>Birth Date:</h7>
-                          <h6 >{{ currentUser.birth_date}}</h6>
-      
-                          <h7>Address:</h7>
-                          <h6  >{{ currentUser.street}}, {{ currentUser.barangay}}, {{ currentUser.city}}, {{ currentUser.province}}</h6>
-      
-                          <!-- <h7>Email Address</h7>
-                          <h6 v-if="currentUser">{{ currentUser.student_profile.email}}</h6> -->
-      
-                      </div>
-                  </div>
+            <div class="right">
+              <h5>Personal Information</h5>
+              <h7>Name:</h7>
+              <h6>{{ currentUser.first_name }} {{ currentUser.middle_name }} {{ currentUser.last_name }}</h6>
+              <h7>Gender:</h7>
+              <h6>{{ currentUser.sex_at_birth }}</h6>
+              <h7>Birth Date:</h7>
+              <h6>{{ currentUser.birth_date }}</h6>
+              <h7>Address:</h7>
+              <h6>{{ currentUser.street }}, {{ currentUser.barangay }}, {{ currentUser.city }}, {{ currentUser.province }}</h6>
+            </div>
           </div>
         </div>
+      </div>
     </div>
 
-
-
-        <!-- Upload Picture Dialog -->
-        <v-dialog v-model="showUploadDialog" max-width="400px">
-          <v-card>
-            <v-card-title class="fw-bold" style="padding:1.2rem;background-color: var(--dark); color:white; border-radius:3px;"><span class="material-icons" style="position:relative; right:5px; top:5px;">upload</span>Upload Profile Picture</v-card-title>
-              <v-card-text>
-                  <v-file-input @change="handleFileChange" accept="image/*" label="Choose an image" />
-              </v-card-text>
-              <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn @click="showUploadDialog = false">Cancel</v-btn>
-              </v-card-actions>
-          </v-card>
-      </v-dialog>
-</main>
+    <!-- Upload Picture Dialog -->
+    <v-dialog v-model="showUploadDialog" max-width="400px">
+      <v-card>
+        <v-card-title class="fw-bold" style="padding:1.2rem;background-color: var(--dark); color:white; border-radius:3px;">
+          <span class="material-icons" style="position:relative; right:5px; top:5px;">upload</span>Upload Profile Picture
+        </v-card-title>
+        <v-card-text>
+          <v-file-input @change="handleFileChange" accept="image/*" label="Choose an image" />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="showUploadDialog = false">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </main>
 </template>
 
 <script>

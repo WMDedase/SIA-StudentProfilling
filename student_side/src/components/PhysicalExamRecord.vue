@@ -23,48 +23,64 @@
         </span>
         Physical Examination Record
       </v-card-title>
-
       <v-card-text>
-        <v-list>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Height:</v-list-item-title>
-              <v-list-item-subtitle>{{ physicalExam.height }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Weight:</v-list-item-title>
-              <v-list-item-subtitle>{{ physicalExam.weight }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Blood Pressure:</v-list-item-title>
-              <v-list-item-subtitle>{{ physicalExam.blood_pressure }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Pulse Rate:</v-list-item-title>
-              <v-list-item-subtitle>{{ physicalExam.pulse_rate }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Vision (Left):</v-list-item-title>
-              <v-list-item-subtitle>{{ physicalExam.vision_left }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Vision (Right):</v-list-item-title>
-              <v-list-item-subtitle>{{ physicalExam.vision_right }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-container>
+          <v-row>
+            <v-col cols="6">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Height:</v-list-item-title>
+                  <v-list-item-subtitle>{{ physicalExam.height }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+            <v-col cols="6">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Weight:</v-list-item-title>
+                  <v-list-item-subtitle>{{ physicalExam.weight }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Blood Pressure:</v-list-item-title>
+                  <v-list-item-subtitle>{{ physicalExam.blood_pressure }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+            <v-col cols="6">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Pulse Rate:</v-list-item-title>
+                  <v-list-item-subtitle>{{ physicalExam.pulse_rate }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Vision (Left):</v-list-item-title>
+                  <v-list-item-subtitle>{{ physicalExam.vision_left }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+            <v-col cols="6">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Vision (Right):</v-list-item-title>
+                  <v-list-item-subtitle>{{ physicalExam.vision_right }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
-
       <v-divider></v-divider>
 
       <v-card-actions>
@@ -133,5 +149,25 @@ export default {
 .record-btn {
   padding: 1.5rem;
   display: flex;
+}
+
+.v-list-item{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    border-top: 4px solid var(--dark);
+    border-radius: 10px ;
+    .v-list-item-title{
+        font-size: 22px;
+        color: var(--dark);
+        font-weight: 900;
+    }
+    .v-list-item-subtitle{
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        margin: 0.5rem;
+    }
 }
 </style>

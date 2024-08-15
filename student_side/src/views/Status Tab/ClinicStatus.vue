@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import ClinicTable from '../../components/ClinicTable.vue';
 import { fetchCurrentUser } from '../../services/api';
+import PhysicalExamRecord from '../../components/PhysicalExamRecord.vue';
 
 // Reactive references
 const currentUser = ref(null);
@@ -68,8 +69,14 @@ onMounted(async () => {
             </v-card>
           </v-col>
 
-          <v-col col="6"></v-col>
+          <v-col col="6">
 
+            <div class="physical-btn">
+              <PhysicalExamRecord/>
+          </div>
+
+          </v-col>
+  
           <v-col cols="12">
             <v-card class="mx-auto mr-5 bottom-left" elevation="3" max-width="auto">
               <v-card-item>
@@ -150,6 +157,12 @@ main {
         padding: 1.5rem;
         font-size: 25px;
       }
+    }
+
+    .physical-btn{
+      display: flex;
+      justify-content: end;
+      
     }
 
     .bottom-left {

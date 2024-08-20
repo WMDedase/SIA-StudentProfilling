@@ -108,6 +108,7 @@ main {
       margin: 0;
       flex-direction: column;
     
+
       .left-container {
         flex: 1;
 
@@ -140,10 +141,20 @@ main {
 
 
         }
+
       .bottom-container{
         flex-direction: column;
       }
   }
+
+  @media (max-width: 605px){
+    .top-container{
+      .bg-title{
+          display: none;
+      }
+    }
+  }
+
 }
 .headerAndContent {
   display: flex;

@@ -48,7 +48,7 @@ onMounted(async () => {
     <div class="bottom-container">
       <div class="left">
         <v-row>
-          <v-col col="6">
+          <v-col cols="12" sm="6" xs="6">
             <v-card 
               class="top-left mx-auto mr-5" 
               elevation="3"
@@ -69,7 +69,7 @@ onMounted(async () => {
             </v-card>
           </v-col>
 
-          <v-col col="6">
+          <v-col cols="12" sm="6" xs="6">
 
             <div class="physical-btn">
               <PhysicalExamRecord/>
@@ -167,20 +167,10 @@ main {
 
     .bottom-left {
       border-left: 4px solid var(--dark-alt);
-    }
-  }
-  .right {
-    flex: 0.4;
 
-    .right-container {
-      border-right: 4px solid var(--dark-alt);
-    }
-    .headline {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--dark);
     }
   }
+
 
   @media (max-width: 1050px) {
     justify-content: center;
@@ -196,13 +186,7 @@ main {
         border-right: 4px solid var(--dark-alt);
       }
     }
-    .right {
-      margin-top: 1.5rem;
 
-      .right-container {
-        border-left: 4px solid var(--dark-alt);
-      }
-    }
   }
 }
 </style>

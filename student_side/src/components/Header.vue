@@ -109,5 +109,14 @@ onMounted(async () => {
       align-self: center;
     }
   }
+
+  @media (max-width: 680px) {
+    .profile {
+
+      h5{
+        display: none;
+      }
+    }
+  }
 }
 </style>

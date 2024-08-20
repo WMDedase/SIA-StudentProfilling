@@ -39,7 +39,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main>
     <!-- Consultation Records Table -->
     <v-data-table
       :headers="headersConsultationRecords"
@@ -65,7 +64,6 @@ onMounted(async () => {
         {{ error || 'No consultation records found.' }}
       </template>
     </v-data-table>
-  </main>
 </template>
 
 <style scoped>

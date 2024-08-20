@@ -149,14 +149,15 @@ export default {
 .record-btn {
   padding: 1.5rem;
   display: flex;
+  
 }
 
 .v-list-item{
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
-    padding: 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 10px;
+    padding: 2rem;
     display: flex;
     justify-content: center;
-    border-top: 4px solid var(--dark);
+    border-top: 7px solid var(--dark);
     border-radius: 10px ;
     .v-list-item-title{
         font-size: 22px;

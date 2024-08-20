@@ -246,7 +246,6 @@ main {
       border-radius: 10px;
       border-left: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-
       h3 {
         text-shadow: 0 0 1px;
         font-size: 20px;

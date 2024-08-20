@@ -80,6 +80,18 @@ onMounted(async () => {
 
       </v-data-table>
 
+        <div class="schedule-card">
+          <h4>Class Schedule</h4>
+          <!-- Loop through schedule data and display it -->
+          <div v-for="item in schedule" :key="item.classcode" class="schedule-item">
+            <p><strong>Class Code:</strong> {{ item.classcode }}</p>
+            <p class="class-desc"><strong>{{ item.class_desc }}</strong> </p>
+            <p><strong>Section:</strong> {{ item.section }}</p>
+            <p><strong>Time:</strong> {{ item.time }}</p>
+            <p><strong>Adviser:</strong> {{ item.faculty.fname + " " + item.faculty.lname }}</p>
+          </div>
+        </div>
+
     </div>    
   </main>
 </template>
@@ -144,7 +156,7 @@ main {
 
 .bottom-container{
     display: flex;
-
+    flex-direction: column;
     .v-data-table{
       padding: 1rem;
       margin-bottom: 2rem;
@@ -152,7 +164,6 @@ main {
       border-radius: 5px;
       border-left: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
-
     .v-table__wrapper{
         color: var(--dark);
         padding: 1.5rem;
@@ -162,9 +173,48 @@ main {
             font-weight: 800;
         }
     }
+
+
+  }
+  .schedule-card{
+    display: none;
+
   }
 
+  @media (max-width: 800px){
+    .v-data-table{
+      display: none;
+    }
+  
+    .schedule-card{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 100%;
+      
+      h4{
+        color: var(--dark);
+        font-weight: 900;
+      }
 
+      .class-desc{
+        font-size: 24px; 
+        border-bottom:2px solid #f0f0f0;
+        color: var(--dark);
+        font-weight: 700;
+      }
+      .schedule-item{
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border-left: 5px solid var(--dark);
+        border-radius: 5px;
+        font-size: 12px;
+      }
+    }
+  }
 }
+
 
 </style>

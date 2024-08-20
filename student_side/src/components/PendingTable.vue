@@ -1,3 +1,5 @@
+can you add another dropdown filtering for the table for status and document type please
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchCurrentUser } from '../services/api';
@@ -6,6 +8,8 @@ const documentlist = ref([]);
 const headers = ref([
     { title: 'Document Type', key: 'document_type' },
     { title: 'Status', key: 'document_remarks' },
+    { title: 'Control no.', key: 'request_id' },
+
 ]);
 const loading = ref(true);
 const error = ref(null);
@@ -72,6 +76,7 @@ onMounted(async () => {
               item.document_remarks
             }}
           </v-chip></td>
+          <td style="padding:2rem;">{{ item.request_id}}</td>
           <td>{{ item.document_release_date	}}</td>
         </tr>
       </template>
@@ -92,6 +97,7 @@ import Swal from 'sweetalert2';
           { title: 'Document Type', key: 'document_type' },
           { title: 'Status', key: 'status', },
           { title: 'Release Date', key: 'document_release_date' },
+          { title: 'Control no.', key: 'request_id' },
         ],     
         documentData: {
         document_id: null,
@@ -119,7 +125,7 @@ import Swal from 'sweetalert2';
   getStatusColor(status) {
       if (status === "Pending") {
         return "#FFA500"; // Set color to yellow if status is 'pending'
-      } else if (status === "For Recieved") {
+      } else if (status === "For Receive") {
         return "#6EACDA"; // Set color to green if status is 'For Recieved'
       } else if (status === "Received") {
         return "green"; // Set color to green if status is 'Received'

@@ -107,7 +107,46 @@ function openUploadDialog() {
         <div class="pending-table">
           <h3><span class="material-icons"> pending_actions</span>Pending Documents</h3>
           <PendingTable/>
+        
+      </div>
+
+      <div class="upload-container">
+        <div class="upload-header">
+          <h3><span class="material-icons"> pending_actions</span>Document Requirements</h3>
+          <div class="upload-btn">
+            <DocxUploadingForm/>
+          </div>
         </div>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr class="table-head">
+              <th>Requirement</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PSA/Birth Certificate</td>
+              <td :style="{ color: psaStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ psaStatus }}
+              </td>
+            </tr>
+            <tr>
+              <td>Good Moral</td>
+              <td :style="{ color: goodMoralStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ goodMoralStatus }}
+              </td>
+            </tr>
+            <tr>
+              <td>Form-137/A</td>
+              <td :style="{ color: torStatus === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ torStatus }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       </div>
 
       <div class="right-container">
@@ -181,12 +220,14 @@ function openUploadDialog() {
 <script>
 import DocxRequestForm from '../components/DocxRequestForm.vue';
 import PendingTable from '../components/PendingTable.vue';
+import DocxUploadingForm from '../components/DocxUploadingForm.vue';
 
 export default {
   components: {
     DocxRequestForm,
-    PendingTable
-  }
+    PendingTable,
+    DocxUploadingForm
+  },
 }
 </script>
 
@@ -235,33 +276,82 @@ main {
   gap: 2rem;
 
   .left-container{
-    flex: 0.5;
+    flex: 0.4;
     color: var(--dark);
     border-radius: 5px;
     margin-bottom: 0.2rem;
 
     .pending-table{
+      margin-bottom: 2rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border-left: 4px solid var(--dark-alt);
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+
+        h3 {
+          text-shadow: 0 0 1px;
+          font-size: 18px;
+          flex: 1;
+          margin-bottom: 1.5rem;
+
+          .material-icons{
+            position:relative;
+            font-size: 35px;
+            top: 10px;
+          }
+        }
+      }
+    }
+
+    .upload-container{
       margin-bottom: 0.2rem;
       padding: 0.5rem;
       border-radius: 10px;
       border-left: 4px solid var(--dark-alt);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+
       h3 {
         text-shadow: 0 0 1px;
-        font-size: 20px;
+        font-size: 16px;
         flex: 1;
         margin-bottom: 1rem;
+
         .material-icons{
           position:relative;
           font-size: 35px;
           top: 10px;
         }
       }
+      .upload-header{
+        display: flex;
+        margin-bottom: 1rem;
+
+        .upload-btn{
+          margin-top: 0.5rem;
+        }
+    }
+
+    table {
+      width: 100%;
+    }
+
+    th {
+      color: var(--dark);
+      font-size: 15px;
+      text-align: center;
+      text-shadow: 0 0 1px;
+    }
+
+    td {
+      color: var(--dark);
+      font-weight: 600;
+      padding: 0.6rem 0.3rem;
+      text-align: center;
     }
   }
 
   .right-container{
-    flex: 0.5;
+    flex: 0.6;
 
     .profile{
       color: var(--dark);

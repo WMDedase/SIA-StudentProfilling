@@ -38,6 +38,7 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
 </script>
 
 <template>
@@ -46,30 +47,12 @@ onMounted(async () => {
     :headers="headers" 
     :items="documentlist" 
     :loading="loading"
+    :items-per-page="3"
     :sort-by="[{ key: 'items_name', order: 'asc' }]">
-    
 
-      <!-- toolbar  -->
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title class="text-h6 font-weight-black" style="color: #2F3F64"></v-toolbar-title>
-          <v-text-field
-          v-model="search"
-          class="w-auto mr-4 "
-          density="compact"
-          label="Search"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo-filled"
-          flat
-          hide-details
-          single-line
-        ></v-text-field>
-  
-        </v-toolbar>
-      </template>
   
       <template v-slot:item= '{ item }'>
-        <tr :key="item.id">
+        <tr :key="item.id" >
           <td style="padding:1rem;">{{ item.document_type}}</td>
           <td :style="{ color: getStatusColor(item.document_remarks) }"><v-chip>
             {{
@@ -141,10 +124,10 @@ import Swal from 'sweetalert2';
   </script>
   
   <style lang="scss">
+  
   .v-data-table {
   .v-table__wrapper{
     color: var(--dark);
-    padding: 1.5rem;
     
     .v-data-table__th {
       font-size: 17px;
@@ -153,10 +136,16 @@ import Swal from 'sweetalert2';
     }
   
   }
+
+  .v-data-table-footer__items-per-page{
+    display: none;
+  }
+  
   .icon-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    
     .v-icon{
       font-size: 28px;
     }

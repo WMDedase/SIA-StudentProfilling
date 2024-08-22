@@ -367,7 +367,6 @@ main {
 
   .right-container {
     flex: 0.5;
-    margin-left: 1rem;
 
     .vmg {
       padding: 1rem;

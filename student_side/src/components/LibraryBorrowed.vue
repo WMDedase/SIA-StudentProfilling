@@ -83,3 +83,9 @@ onMounted(async () => {
     </template>
   </v-data-table>
 </template>
+
+<style lang="scss">
+.v-data-table-footer__items-per-page{
+  display: none;
+}
+</style>

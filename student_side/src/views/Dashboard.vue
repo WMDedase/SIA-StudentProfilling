@@ -196,7 +196,7 @@ onMounted(async () => {
       <div class="right-container">
         <div class="vmg">
           <h4>St. Nicholas Academy of Castillejos</h4>
-          <h5>MISSION - VISION - GOALS</h5>
+          <h5>VISION - MISSION - GOALS</h5>
           <VMG />
         </div>
       </div>

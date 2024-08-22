@@ -276,7 +276,7 @@ main {
   gap: 2rem;
 
   .left-container{
-    flex: 0.4;
+    flex: 0.45;
     color: var(--dark);
     border-radius: 5px;
     margin-bottom: 0.2rem;
@@ -351,7 +351,7 @@ main {
   }
 
   .right-container{
-    flex: 0.6;
+    flex: 0.55;
 
     .profile{
       color: var(--dark);

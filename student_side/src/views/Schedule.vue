@@ -181,7 +181,7 @@ main {
 
   }
 
-  @media (max-width: 800px){
+  @media (max-width: 930px){
     .v-data-table{
       display: none;
     }

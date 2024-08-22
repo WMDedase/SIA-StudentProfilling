@@ -8,7 +8,7 @@ const documentlist = ref([]);
 const headers = ref([
     { title: 'Document Type', key: 'document_type' },
     { title: 'Status', key: 'document_remarks' },
-    { title: 'Control no.', key: 'request_id' },
+    { title: 'Control No.', key: 'request_id' },
 
 ]);
 const loading = ref(true);

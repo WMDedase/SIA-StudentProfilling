@@ -19,6 +19,11 @@ onMounted(async () => {
 
     currentUser.value = response.student_profile;
     if (response.student_profile) {
+
+      psaStatus.value = response.student_profile.psa || 'Pending';
+      goodMoralStatus.value = response.student_profile.goodmoral || 'Pending';
+      torStatus.value = response.student_profile.tor || 'Pending';
+
       console.log('Current user data:', currentUser.value);
 
       if (response.student_profile.profile_pic && response.student_profile.profile_pic.image) {
@@ -26,7 +31,7 @@ onMounted(async () => {
         console.log('Received image data:', imageFilename);
 
         // Construct the full URL to the image
-        profilePicUrl.value = `http://26.81.173.255:8000/uploads/profile/${imageFilename}`;
+        profilePicUrl.value = 'http://26.81.173.255:8000/uploads/profile/${imageFilename}';
         canUpload.value = false; // Disable upload if profile picture already exists
       }
     } else {
@@ -128,20 +133,20 @@ function openUploadDialog() {
           <tbody>
             <tr>
               <td>PSA/Birth Certificate</td>
-              <td :style="{ color: psaStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                {{ psaStatus }}
+              <td :style="{ color: currentUser.psa === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ currentUser.psa }}
               </td>
             </tr>
             <tr>
               <td>Good Moral</td>
-              <td :style="{ color: goodMoralStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                {{ goodMoralStatus }}
+              <td :style="{ color: currentUser.goodmoral === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ currentUser.goodmoral }}
               </td>
             </tr>
             <tr>
               <td>Form-137/A</td>
-              <td :style="{ color: torStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                {{ torStatus }}
+              <td :style="{ color: currentUser.tor === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ currentUser.tor }}
               </td>
             </tr>
           </tbody>

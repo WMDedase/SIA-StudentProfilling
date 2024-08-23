@@ -131,20 +131,20 @@ function openUploadDialog() {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-if="currentUser">
               <td>PSA/Birth Certificate</td>
               <td :style="{ color: currentUser.psa === 'Cleared' ? 'green' : '#FFA500' }">
                 {{ currentUser.psa }}
               </td>
             </tr>
-            <tr>
-              <td>Good Moral</td>
+            <tr v-if="currentUser">
+              <td >Good Moral</td>
               <td :style="{ color: currentUser.goodmoral === 'Cleared' ? 'green' : '#FFA500' }">
                 {{ currentUser.goodmoral }}
               </td>
             </tr>
-            <tr>
-              <td>Form-137/A</td>
+            <tr v-if="currentUser">
+              <td >Form-137/A</td>
               <td :style="{ color: currentUser.tor === 'Cleared' ? 'green' : '#FFA500' }">
                 {{ currentUser.tor }}
               </td>

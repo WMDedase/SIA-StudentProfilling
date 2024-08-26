@@ -39,18 +39,8 @@ onMounted(async () => {
               <!-- Personal Information -->
 
           <!-- Document Details -->
-          <v-col cols="12">
-            <v-file-input
-              v-model="psaBirthFile"
-              label="PSA/Birth Certificate"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              required
-              @change="previewFile('psaBirthFile')"
 
-            ></v-file-input>
-          </v-col>
-
-          <!-- File Input for Gosod Moral Certificate -->
+          <!-- File Input for Good Moral Certificate -->
           <v-col cols="12">
             <v-file-input
               v-model="goodMoralFile"
@@ -60,15 +50,6 @@ onMounted(async () => {
             ></v-file-input>
           </v-col>
 
-          <!-- File Input for Form 137-A -->
-          <v-col cols="12">
-            <v-file-input
-              v-model="form137File"
-              label="Form 137-A"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              required
-            ></v-file-input>
-          </v-col>
           </v-row>
 
 
@@ -107,9 +88,7 @@ onMounted(async () => {
     data() {
       return {
         dialog: false,
-        psaBirthFile: null,
         goodMoralFile: null,
-        form137File: null,
         student_id: '',
       };
     },

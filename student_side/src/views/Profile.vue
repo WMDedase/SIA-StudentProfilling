@@ -128,8 +128,8 @@ function openUploadDialog() {
           <tbody>
             <tr v-if="currentUser">
               <td>PSA/Birth Certificate</td>
-              <td :style="{ color: psaStatus === 'Cleared' ? 'green' : '#FFA500' }">
-                {{ psaStatus }}
+              <td :style="{ color: currentUser.psa === 'Cleared' ? 'green' : '#FFA500' }">
+                {{ currentUser.psa }}
               </td>
             </tr>
             <tr v-if="currentUser">

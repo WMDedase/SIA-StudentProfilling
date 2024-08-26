@@ -9,6 +9,7 @@ const headers = ref([
     { title: 'Document Type', key: 'document_type' },
     { title: 'Status', key: 'document_remarks' },
     { title: 'Control No.', key: 'request_id' },
+    { title: 'Release Date', key: 'document_release_date' },
 
 ]);
 const loading = ref(true);
@@ -60,7 +61,7 @@ onMounted(async () => {
             }}
           </v-chip></td>
           <td style="padding:2rem;">{{ item.request_id}}</td>
-          <td>{{ item.document_release_date	}}</td>
+          <td >{{ item.document_release_date	}}</td>
         </tr>
       </template>
     </v-data-table>
